@@ -8,6 +8,7 @@ playbook=''
 galaxyfile='requirements.yml'
 pypifile='requirements.txt'
 inventory='localhost,'
+cmd="ansible-playbook"
 
 USAGE="""$0 [-p test.yml] [-g requirements.yml] [-r requirements.txt] [-i 'localhost,'] [-v] [-h]
   Installs pre-reqs and runs an Ansible playbook. Looks for / falls back to test.yml,
@@ -26,22 +27,22 @@ while getopts 'p:g:r:i:hv' flag; do
     p) playbook="${OPTARG}" ;;
     g) galaxyfile="${OPTARG}" ;;
     r) pypifile="${OPTARG}" ;;
-    i) inventory="${OPTARG}" ;;
-    v) verbosity="-vvv" ;;
+    i) cmd="${cmd} -i ${OPTARG}" ;;
+    v) cmd="${cmd} -vvv" ;;
     h) echo "${USAGE}"; exit 0 ;;
-    *) echo -e "ERROR: Unexpected option ${flag}!\n"; echo "${USAGE}"; exit 1 ;;
+    *) echo -e "\nERROR: Unexpected option ${flag}!\n"; echo "${USAGE}"; exit 1 ;;
   esac
 done
 
 # Install ansible-galaxy requirements
 if [ -f "${galaxyfile}" ]; then
-  echo "### Installing pre-reqs from Ansible Galaxy..."
+  echo -e "\n### Installing pre-reqs from Ansible Galaxy..."
   ansible-galaxy install -r "${galaxyfile}"
 fi
 
 # Install Python requirements
 if [ -f "${pypifile}" ]; then
-  echo "### Installing pre-reqs from PyPI..."
+  echo -e "\n### Installing pre-reqs from PyPI..."
   pip install -r "${pypifile}"
 fi
 
@@ -55,4 +56,5 @@ if [ ! -f "${playbook}" ]; then
 fi
 
 # Do the thing.
-ansible-playbook "${verbosity}" "${playbook}" -i "${inventory}"
+echo -e "\n### Starting run for playbook ${playbook}..."
+$cmd "${playbook}"
