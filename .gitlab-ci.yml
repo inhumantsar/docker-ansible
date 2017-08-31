@@ -1,0 +1,6 @@
+stages:
+  - centos
+
+centos:
+  script:
+    - docker build -t ansible --no-cache -f $CI_PROJECT_DIR/centos/Dockerfile
