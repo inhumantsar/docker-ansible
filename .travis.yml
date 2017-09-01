@@ -12,7 +12,7 @@ branches:
 
 env:
   - IMAGE_OS=centos7
-  - TEST_SUITE=integration
+  - IMAGE_OS=alpine
 
 script:
   - docker build -t ansible --no-cache -f $IMAGE_OS/Dockerfile
