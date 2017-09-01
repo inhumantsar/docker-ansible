@@ -15,7 +15,7 @@ env:
   - IMAGE_OS=alpine
 
 script:
-  - docker build -t ansible --no-cache -f $IMAGE_OS/Dockerfile
+  - docker build -t ansible --no-cache $IMAGE_OS
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
