@@ -1,6 +1,7 @@
-stages:
-  - centos
 
-centos:
+centos7:
   script:
-    - docker build -t ansible --no-cache -f $CI_PROJECT_DIR/centos/Dockerfile
+    - docker build -t ansible:centos7 --no-cache -f $CI_PROJECT_DIR/centos7/Dockerfile
+alpine:
+  script:
+    - docker build -t ansible:alpine --no-cache -f $CI_PROJECT_DIR/alpine/Dockerfile
