@@ -1,0 +1,7 @@
+
+centos7:
+  script:
+    - docker build -t ansible:centos7 --no-cache $CI_PROJECT_DIR/centos7
+alpine:
+  script:
+    - docker build -t ansible:alpine --no-cache $CI_PROJECT_DIR/alpine

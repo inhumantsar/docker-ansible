@@ -1,0 +1,21 @@
+language: python
+python: "2.7"
+
+sudo: required
+services:
+  - docker
+
+branches:
+  only:
+    - master
+    - dev
+
+env:
+  - IMAGE_OS=centos7
+  - IMAGE_OS=alpine
+
+script:
+  - docker build -t ansible --no-cache $IMAGE_OS
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
