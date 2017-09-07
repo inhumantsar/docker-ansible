@@ -6,7 +6,7 @@ For running Ansible locally.
 
 To test a role or playbook:
 ```
-$ cd /path/to/role_repo
+$ cd /path/to/repo
 $ sudo docker run --rm -it -w /workspace -v $(pwd):/workspace inhumantsar/ansible
 ```
 
@@ -24,15 +24,23 @@ $ sudo docker run --rm -it -w /workspace -v $(pwd):/workspace inhumantsar/ansibl
 /workspace #  ansible-playbook test.yml -vvv
 ```
 
+To test something which uses Docker:
+```
+$ cd /path/to/repo
+$ sudo docker run --rm -it -w /workspace -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workspace inhumantsar/ansible
+```
+
 ### Default Behaviour
-* Expects the role or playbook directory to be mounted to `/workspace` 
+* Expects the role or playbook directory to be mounted to `/workspace`
   * eg: `$HOME/src/ansible-role-moo:/workspace`
-* Looks for and runs a playbook named (in order of precendence): 
+* Looks for and runs a playbook named (in order of precendence):
   1. `test.yml`
   2. `local.yml`
   3. `playbook.yml`
-* Installs Python requirements found in `requirements.txt` by default
-* Installs Ansible Galaxy requirements found in `requirements.yml` by default
+  4. `site.yml`
+* Installs Python requirements found in `requirements.txt` with `pip`
+* Installs Ansible Galaxy requirements found in `requirements.yml` with `ansible-galaxy`
+* Installs system packages found in `system_packages.txt` with `yum` or `apk`
 * Defaults to localhost-only inventory. (ie: `'localhost,'`)
 
 
@@ -46,6 +54,7 @@ $ sudo docker run --rm -it -w /workspace -v $(pwd):/workspace inhumantsar/ansibl
   -g    Path to Ansible Galaxy requirements file (default: requirements.yml)
   -r    Path to PyPI/pip requirements file (default: requirements.txt)
   -i    Inventory string passed directly to Ansible (default: localhost,)
+  -e    Extra vars eg: 'SOMEVAR=someval'
   -v    Enable debug messages
   -h    Show this help message
 ```
