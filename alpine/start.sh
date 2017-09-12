@@ -60,7 +60,7 @@ if [ -f "${pypifile}" ] && [[ $skip_all -eq 0 ]]; then
 fi
 
 # Install system packages
-if [ -f "${pkgfile}"] && [[ $skip_all -eq 0 ]]; then
+if [ -f "${pkgfile}" ] && [[ $skip_all -eq 0 ]]; then
   echo -e "\n### Installing system packages..."
   pkgs=""
   cat $pkgfile | while read line; do
