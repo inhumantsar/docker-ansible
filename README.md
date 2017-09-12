@@ -46,15 +46,15 @@ $ sudo docker run --rm -it -w /workspace -v /var/run/docker.sock:/var/run/docker
 
 #### Overrides
 ```
-./start.sh [-p test.yml] [-g requirements.yml] [-r requirements.txt] [-i 'localhost,'] [-v] [-h]
-  Installs pre-reqs and runs an Ansible playbook. Looks for / falls back to test.yml,
-  local.yml, and playbook.yml by default.
+/start.sh [-p test.yml] [-g requirements.yml] [-r requirements.txt] [-s system_packages.txt] [-x] [-*] [-h]
+  Installs pre-reqs and runs an Ansible playbook.
 
-  -p    Path to Ansible playbook
+  -p    Path to Ansible playbook (default: test.yml > local.yml > playbook.yml > site.yml)
   -g    Path to Ansible Galaxy requirements file (default: requirements.yml)
   -r    Path to PyPI/pip requirements file (default: requirements.txt)
-  -i    Inventory string passed directly to Ansible (default: localhost,)
-  -e    Extra vars eg: 'SOMEVAR=someval'
+  -s    Path to a list of system packages to install, one per line. (default: system_packages.txt)
+  -x    Skip all dependency installs.
+  -*    Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)
   -v    Enable debug messages
   -h    Show this help message
 ```
