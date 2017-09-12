@@ -30,7 +30,75 @@ $ cd /path/to/repo
 $ sudo docker run --rm -it -w /workspace -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workspace inhumantsar/ansible
 ```
 
-### Default Behaviour
+### ONBUILD Usage
+
+ONBUILD images are designed to package up playbooks and their dependencies into fully self-contained "executables". To use, simply inherit the `inhumantsar/ansible:onbuild-*` image you'd like to use and either follow the usual conventions, or use the following env vars.
+
+```
+$ cd /path/to/ansible-play-dothething && ls -l
+total 108
+-rw-rw-r-- 1 sam sam    0 Aug 22 11:00 ansible.cfg
+-rw-rw-r-- 1 sam sam  538 Aug 22 11:00 Dockerfile
+drwxrwxr-x 2 sam sam 4096 Aug 22 11:00 group_vars
+-rw-rw-r-- 1 sam sam   10 Aug 22 11:00 hosts
+-rw-rw-r-- 1 sam sam   79 Aug 22 11:00 LICENSE
+-rw-rw-r-- 1 sam sam  923 Aug 22 11:00 site.yml
+-rw-rw-r-- 1 sam sam 2077 Aug 22 11:00 README.md
+-rw-rw-r-- 1 sam sam   13 Aug 22 11:00 requirements.txt
+-rw-rw-r-- 1 sam sam   57 Aug 22 11:00 requirements.yml
+
+$ cat Dockerfile
+FROM inhumantsar/ansible:onbuild
+MAINTAINER Shaun Martin <shaun@samsite.ca>
+
+$ ansible-playbook
+ansible-playbook: command not found
+
+$ sudo docker build -t ansible-play-dothething .
+Sending build context to Docker daemon   170 kB
+Step 1/2 : FROM inhumantsar/onbuild
+# Executing 2 build triggers...
+Step 1/1 : ADD . $WORKDIR/
+Step 1/1 : RUN /start.sh -y
+ ---> Running in b2625b8db79a
+
+### Installing pre-reqs from Ansible Galaxy...
+- downloading role 'somerole', owned by inhumantsar
+- downloading role from https://github.com/inhumantsar/ansible-role-somerole/archive/master.tar.gz
+- extracting inhumantsar.somerole to /etc/ansible/roles/inhumantsar.somerole
+...
+### Skipping playbook run.
+ ---> 6379281ee73d
+Removing intermediate container 12dd6ac8f659
+Removing intermediate container b2625b8db79a
+Step 2/2 : MAINTAINER Shaun Martin <shaun@samsite.ca>
+ ---> Running in 998f75b305c3
+ ---> 5c4d9542260c
+Removing intermediate container 998f75b305c3
+Successfully built 5c4d9542260c
+
+$ sudo docker run --rm -it -v $(pwd):/workspace -v $HOME/.ssh:/root/.ssh ansible-play-dothething
+
+### Starting run for playbook local.yml...
+
+PLAY [Do the thing!] *************************************************************************************************************
+
+TASK [Gathering Facts] ***********************************************************************************************************
+ok: [localhost]
+
+TASK [doing the thing...] ********************************************************************************************************
+...
+```
+
+#### Overrides
+
+* `WORKDIR` - Path to where the code should live. Default: `/workspace`
+* `GALAXY` - Path to Ansible requirements. Default: `$WORKDIR/requirements.yml`
+* `PYPI` - Path to Python requirements. Default: `$WORKDIR/requirements.txt`
+* `SYSPKGS` - Path to system package deps. Default: `$WORKDIR/system_packages.txt`
+
+
+### Conventions
 * Expects the role or playbook directory to be mounted to `/workspace`
   * eg: `$HOME/src/ansible-role-moo:/workspace`
 * Looks for and runs a playbook named (in order of precendence):
@@ -41,12 +109,13 @@ $ sudo docker run --rm -it -w /workspace -v /var/run/docker.sock:/var/run/docker
 * Installs Python requirements found in `requirements.txt` with `pip`
 * Installs Ansible Galaxy requirements found in `requirements.yml` with `ansible-galaxy`
 * Installs system packages found in `system_packages.txt` with `yum` or `apk`
-* Defaults to localhost-only inventory. (ie: `'localhost,'`)
 
+### /start.sh
 
-#### Overrides
+This startup script takes care of the dependency installs and starts `ansible-playbook`. It has a few options of its own, but anything outside of those are passed directly to `ansible-playbook`. This is the best way to specify env vars or an alternative inventory file.
+
 ```
-/start.sh [-p test.yml] [-g requirements.yml] [-r requirements.txt] [-s system_packages.txt] [-x] [-*] [-h]
+/start.sh [-p test.yml] [-g requirements.yml] [-r requirements.txt] [-s system_packages.txt] [-x] [-y] [-*] [-h]
   Installs pre-reqs and runs an Ansible playbook.
 
   -p    Path to Ansible playbook (default: test.yml > local.yml > playbook.yml > site.yml)
@@ -54,6 +123,7 @@ $ sudo docker run --rm -it -w /workspace -v /var/run/docker.sock:/var/run/docker
   -r    Path to PyPI/pip requirements file (default: requirements.txt)
   -s    Path to a list of system packages to install, one per line. (default: system_packages.txt)
   -x    Skip all dependency installs.
+  -y    Skip playbook run.
   -*    Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)
   -v    Enable debug messages
   -h    Show this help message
