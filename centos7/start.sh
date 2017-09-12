@@ -1,27 +1,34 @@
 #!/bin/bash
 
 ### startup script for Ansible testing
-# NOTE: Set working directory with `-w` in the `docker run` command.
+
+[ "${PLAYBOOK}" != "" ] && playbook="${PLAYBOOK}" || playbook=''
+[ "${WORKDIR}" != "" ] && wd="${WORKDIR}" || wd='/workspace'
+[ "${GALAXY}" != "" ] && galaxyfile="${GALAXY}" || galaxyfile="${wd}/requirements.yml"
+[ "${PYPI}" != "" ] && pypifile="${PYPI}" || pypifile="${wd}/requirements.txt"
+[ "${SYSPKGS}" != "" ] && pkgfile="${SYSPKGS}" || pkgfile="${wd}/system_packages.txt"
 
 verbosity=''
-playbook=''
-galaxyfile='requirements.yml'
-pypifile='requirements.txt'
-pkgfile='system_packages.txt'
 skip_all=0
+skip_playbook=0
 cmd="ansible-playbook"
+pkg_cmd="yum makecache fast; yum install -y"
 
-USAGE="""$0 [-p test.yml] [-g requirements.yml] [-r requirements.txt] [-s system_packages.txt] [-x] [-*] [-h]
+USAGE="""$0 [-x] [-y] [-v] [-h] [-*]
   Installs pre-reqs and runs an Ansible playbook.
 
-  -p    Path to Ansible playbook (default: test.yml > local.yml > playbook.yml > site.yml)
-  -g    Path to Ansible Galaxy requirements file (default: requirements.yml)
-  -r    Path to PyPI/pip requirements file (default: requirements.txt)
-  -s    Path to a list of system packages to install, one per line. (default: system_packages.txt)
   -x    Skip all dependency installs.
-  -*    Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)
+  -y    Skip playbook run.
   -v    Enable debug messages
   -h    Show this help message
+  -*    Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)
+
+  ENV vars:
+    WORKDIR     Path to code location in the image. (default: /workspace)
+    PLAYBOOK    Path to Ansible playbook (default: WORKDIR/test.yml > local.yml > playbook.yml > site.yml)
+    GALAXY      Path to Ansible Galaxy requirements file (default: WORKDIR/requirements.yml)
+    PYPI        Path to PyPI/pip requirements file (default: WORKDIR/requirements.txt)
+    SYSPKGS     Path to a list of system packages to install, one per line. (default: WORKDIR/system_packages.txt)
 """
 
 # doing this instead of getopts so we can trap "invalid" params and use them as
@@ -38,6 +45,8 @@ while test $# -gt 0; do
       pkgfile="${2}" #; echo "pkgfile=${pkgfile}"
     elif [ "$1" == "-x" ]; then
       skip_all=1
+    elif [ "$1" == "-y" ]; then
+      skip_playbook=1
     elif [ "$1" == "-h" ]; then
       echo $USAGE; exit 0
     else
@@ -47,12 +56,6 @@ while test $# -gt 0; do
     shift; shift
 done
 
-# Install system packages
-if [ -f "${pkgfile}" ] && [[ $skip_all -eq 0 ]]; then
-  echo -e "\n### Installing system packages..."
-  pkgs=$(<$pkgfile)
-  yum makecache fast; yum install -y $pkgs
-fi
 
 # Install ansible-galaxy requirements
 if [ -f "${galaxyfile}" ] && [[ $skip_all -eq 0 ]]; then
@@ -66,13 +69,28 @@ if [ -f "${pypifile}" ] && [[ $skip_all -eq 0 ]]; then
   pip install -r "${pypifile}"
 fi
 
+# Install system packages
+if [ -f "${pkgfile}" ] && [[ $skip_all -eq 0 ]]; then
+  echo -e "\n### Installing system packages..."
+  pkgs=""
+  cat $pkgfile | while read line; do
+    pkgs="${pkgs} ${line}"
+  done
+  $pkg_cmd $pkgs
+fi
+
 # Look for a playbook file
-if [ ! -f "${playbook}" ]; then
+if [ ! -f "${wd}/${playbook}" ]; then
   for pb in 'test.yml' 'local.yml' 'playbook.yml' 'site.yml'; do
-    if [ -f "${pb}" ]; then
-      playbook="${pb}"
+    if [ -f "${wd}/${pb}" ]; then
+      playbook="${wd}/${pb}"
     fi
   done
+fi
+
+if [[ $skip_playbook -eq 1 ]]; then
+  echo -e "\n### Skipping playbook run."
+  exit 0
 fi
 
 # Do the thing.

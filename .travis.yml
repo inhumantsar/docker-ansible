@@ -13,6 +13,8 @@ branches:
 env:
   - IMAGE_OS=centos7
   - IMAGE_OS=alpine
+  - IMAGE_OS=onbuild-centos7
+  - IMAGE_OS=onbuild-alpine
 
 script:
   - docker build --no-cache $IMAGE_OS
