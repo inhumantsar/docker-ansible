@@ -14,41 +14,32 @@ skip_playbook=0
 cmd="ansible-playbook"
 pkg_cmd="apk --no-cache add"
 
-USAGE="""$0 [-x] [-y] [-v] [-h] [-*]
-  Installs pre-reqs and runs an Ansible playbook.
-
-  -x    Skip all dependency installs.
-  -y    Skip playbook run.
-  -v    Enable debug messages
-  -h    Show this help message
-  -*    Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)
-
-  ENV vars:
-    WORKDIR     Path to code location in the image. (default: /workspace)
-    PLAYBOOK    Path to Ansible playbook (default: WORKDIR/test.yml > local.yml > playbook.yml > site.yml)
-    GALAXY      Path to Ansible Galaxy requirements file (default: WORKDIR/requirements.yml)
-    PYPI        Path to PyPI/pip requirements file (default: WORKDIR/requirements.txt)
-    SYSPKGS     Path to a list of system packages to install, one per line. (default: WORKDIR/system_packages.txt)
+USAGE="""$0 [-x] [-y] [-h] [-*]\n
+  Installs pre-reqs and runs an Ansible playbook.\n
+\n
+  -x    Skip all dependency installs.\n
+  -y    Skip playbook run.\n
+  -h    Show this help message\n
+  -*    Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)\n
+\n
+  ENV vars:\n
+    WORKDIR     Path to code location in the image. (default: /workspace)\n
+    PLAYBOOK    Path to Ansible playbook (default: WORKDIR/test.yml > local.yml > playbook.yml > site.yml)\n
+    GALAXY      Path to Ansible Galaxy requirements file (default: WORKDIR/requirements.yml)\n
+    PYPI        Path to PyPI/pip requirements file (default: WORKDIR/requirements.txt)\n
+    SYSPKGS     Path to a list of system packages to install, one per line. (default: WORKDIR/system_packages.txt)\n
 """
 
 # doing this instead of getopts so we can trap "invalid" params and use them as
 # part of the ansible-playbook command
 while test $# -gt 0; do
     # echo "$1 $2"
-    if [ "$1" == "-p" ]; then
-      playbook="${2}" #; echo "playbook=${playbook}"
-    elif [ "$1" == "-g" ]; then
-      galaxyfile="${2}" #; echo "galaxyfile=${galaxyfile}"
-    elif [ "$1" == "-r" ]; then
-      pypifile="${2}" #; echo "pypifile=${pypifile}"
-    elif [ "$1" == "-s" ]; then
-      pkgfile="${2}" #; echo "pkgfile=${pkgfile}"
     elif [ "$1" == "-x" ]; then
       skip_all=1
     elif [ "$1" == "-y" ]; then
       skip_playbook=1
     elif [ "$1" == "-h" ]; then
-      echo $USAGE; exit 0
+      echo -e $USAGE; exit 0
     else
       cmd="${cmd} $1 $2" #; echo $cmd
     fi
@@ -62,7 +53,7 @@ if [ -f "${galaxyfile}" ] && [[ $skip_all -eq 0 ]]; then
   echo -e "\n### Installing pre-reqs from Ansible Galaxy..."
   ansible-galaxy install -r "${galaxyfile}"
 else
-  echo -e "\n### No Ansible Galaxy pre-reqs detected, moving on."
+  echo -e "\n### No Ansible Galaxy pre-reqs found at ${galaxyfile}, moving on."
 fi
 
 # Install Python requirements
@@ -70,7 +61,7 @@ if [ -f "${pypifile}" ] && [[ $skip_all -eq 0 ]]; then
   echo -e "\n### Installing pre-reqs from PyPI..."
   pip install -r "${pypifile}"
 else
-  echo -e "\n### No Python pre-reqs detected, moving on."
+  echo -e "\n### No Python pre-reqs found at ${pypifile}, moving on."
 fi
 
 # Install system packages
@@ -82,7 +73,7 @@ if [ -f "${pkgfile}" ] && [[ $skip_all -eq 0 ]]; then
   done
   $pkg_cmd $pkgs
 else
-  echo -e "\n### No system package pre-reqs detected, moving on."
+  echo -e "\n### No system package pre-reqs found at ${pkgfile}, moving on."
 fi
 
 # Look for a playbook file
@@ -90,6 +81,7 @@ if [ ! -f "${wd}/${playbook}" ]; then
   for pb in 'test.yml' 'local.yml' 'playbook.yml' 'site.yml'; do
     if [ -f "${wd}/${pb}" ]; then
       playbook="${wd}/${pb}"
+      break
     fi
   done
 fi
