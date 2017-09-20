@@ -33,8 +33,7 @@ USAGE="""$0 [-x] [-y] [-h] [-*]\n
 # doing this instead of getopts so we can trap "invalid" params and use them as
 # part of the ansible-playbook command
 while test $# -gt 0; do
-    # echo "$1 $2"
-    elif [ "$1" == "-x" ]; then
+    if [ "$1" == "-x" ]; then
       skip_all=1
     elif [ "$1" == "-y" ]; then
       skip_playbook=1
