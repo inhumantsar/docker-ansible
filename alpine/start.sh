@@ -61,12 +61,16 @@ done
 if [ -f "${galaxyfile}" ] && [[ $skip_all -eq 0 ]]; then
   echo -e "\n### Installing pre-reqs from Ansible Galaxy..."
   ansible-galaxy install -r "${galaxyfile}"
+else
+  echo -e "\n### No Ansible Galaxy pre-reqs detected, moving on."
 fi
 
 # Install Python requirements
 if [ -f "${pypifile}" ] && [[ $skip_all -eq 0 ]]; then
   echo -e "\n### Installing pre-reqs from PyPI..."
   pip install -r "${pypifile}"
+else
+  echo -e "\n### No Python pre-reqs detected, moving on."
 fi
 
 # Install system packages
@@ -77,6 +81,8 @@ if [ -f "${pkgfile}" ] && [[ $skip_all -eq 0 ]]; then
     pkgs="${pkgs} ${line}"
   done
   $pkg_cmd $pkgs
+else
+  echo -e "\n### No system package pre-reqs detected, moving on."
 fi
 
 # Look for a playbook file
