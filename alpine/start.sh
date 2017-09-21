@@ -80,6 +80,7 @@ if [ ! -f "${wd}/${playbook}" ]; then
   for pb in 'test.yml' 'local.yml' 'playbook.yml' 'site.yml'; do
     if [ -f "${wd}/${pb}" ]; then
       playbook="${wd}/${pb}"
+      echo "\n### Found playbook: ${playbook}"
       break
     fi
   done
