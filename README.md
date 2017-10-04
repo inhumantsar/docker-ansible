@@ -10,10 +10,16 @@ $ cd /path/to/repo
 $ sudo docker run --rm -it -w /workspace -v $(pwd):/workspace inhumantsar/ansible
 ```
 
+To pass along params to `ansible-playbook`:
+```
+$ cd /path/to/repo
+$ sudo docker run --rm -it -w /workspace -v $(pwd):/workspace inhumantsar/ansible /start.sh -e SOMEVAR=moo -i 'somehost01,'
+```
+
 To run a playbook against hosts:
 ```
 $ cd /path/to/playbook
-$ sudo docker run --rm -it -w /workspace -v $(pwd):/workspace -v $HOME/.ssh:/root/.ssh inhumantsar/ansible
+$ sudo docker run --rm -it -w /workspace -v $(pwd):/workspace -v /path/to/inventory:/inventory:ro -v $HOME/.ssh:/root/.ssh inhumantsar/ansible /start.sh -i /inventory
 ```
 
 To debug:
@@ -115,16 +121,19 @@ TASK [doing the thing...] ******************************************************
 This startup script takes care of the dependency installs and starts `ansible-playbook`. It has a few options of its own, but anything outside of those are passed directly to `ansible-playbook`. This is the best way to specify env vars or an alternative inventory file.
 
 ```
-/start.sh [-p test.yml] [-g requirements.yml] [-r requirements.txt] [-s system_packages.txt] [-x] [-y] [-*] [-h]
-  Installs pre-reqs and runs an Ansible playbook.
+/start.sh [-x] [-y] [-h] [-*]
+ Installs pre-reqs and runs an Ansible playbook.
+ 
+ -x Skip all dependency installs.
+ -y Skip playbook run.
+ -h Show this help message
+ -* Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)
+ 
+ ENV vars:
+  WORKDIR Path to code location in the image. (default: /workspace)
+  PLAYBOOK Path to Ansible playbook (default: WORKDIR/test.yml > local.yml > playbook.yml > site.yml)
+  GALAXY Path to Ansible Galaxy requirements file (default: WORKDIR/requirements.yml)
+  PYPI Path to PyPI/pip requirements file (default: WORKDIR/requirements.txt)
+  SYSPKGS Path to a list of system packages to install, one per line. (default: WORKDIR/system_packages.txt)
 
-  -p    Path to Ansible playbook (default: test.yml > local.yml > playbook.yml > site.yml)
-  -g    Path to Ansible Galaxy requirements file (default: requirements.yml)
-  -r    Path to PyPI/pip requirements file (default: requirements.txt)
-  -s    Path to a list of system packages to install, one per line. (default: system_packages.txt)
-  -x    Skip all dependency installs.
-  -y    Skip playbook run.
-  -*    Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)
-  -v    Enable debug messages
-  -h    Show this help message
 ```
