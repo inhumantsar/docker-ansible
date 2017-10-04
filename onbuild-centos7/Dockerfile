@@ -8,8 +8,7 @@ ENV SYSPKGS $WORKDIR/system_packages.txt
 
 WORKDIR [ $WORKDIR ]
 
-ADD . $workdir
-
+ONBUILD ADD . $WORKDIR/
 ONBUILD RUN /start.sh -y -g $GALAXY -r $PYPI -s $SYSPKGS
 
-CMD ["/start.sh", "-x"]
+CMD ["/start.sh", "-x", "-g", "$GALAXY", "-r", "$PYPI", "-s", "$SYSPKGS"]

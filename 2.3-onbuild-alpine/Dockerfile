@@ -1,4 +1,4 @@
-FROM inhumantsar/ansible:alpine
+FROM inhumantsar/ansible:2.3-alpine
 MAINTAINER Shaun Martin <shaun@samsite.ca>
 
 ENV WORKDIR /workspace
