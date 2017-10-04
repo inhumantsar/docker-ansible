@@ -2,6 +2,13 @@
 
 For running Ansible locally.
 
+### Image Variants
+
+* Latest: `alpine` running Ansible 2.4
+* Distros: `alpine`, `centos7`
+* `ONBUILD` versions of each distro
+* Ansible `2.3` versions of each, eg: `2.3-alpine`
+
 ### Usage
 
 To test a role or playbook:
