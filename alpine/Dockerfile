@@ -4,9 +4,10 @@
 FROM alpine:latest
 MAINTAINER Shaun Martin <shaun@samsite.ca>
 
-ENV workdir /workspace
-VOLUME [ $workdir ]
-WORKDIR [ $workdir ]
+ENV WORKDIR /workspace
+VOLUME [ $WORKDIR ]
+WORKDIR [ $WORKDIR ]
+ENV VERSION 2.4
 
 RUN echo "### Installing system packages..." && \
   apk --no-cache add \
@@ -34,7 +35,7 @@ RUN echo "### Installing pip and PyPI packages..." && \
     httplib2 \
     boto \
     boto3 \
-    ansible
+    ansible~="$VERSION.0"
 
 RUN echo "### Disabling 'requiretty' in sudoers..." && \
   sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers

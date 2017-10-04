@@ -7,7 +7,7 @@ MAINTAINER Shaun Martin <shaun@samsite.ca>
 ENV WORKDIR /workspace
 VOLUME [ $WORKDIR ]
 WORKDIR [ $WORKDIR ]
-ENV VERSION 2.4
+ENV VERSION 2.3
 
 # need to perform a little boilerplate magic to enable systemd
 # taken from https://hub.docker.com/_/centos/
