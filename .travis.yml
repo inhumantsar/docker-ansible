@@ -8,17 +8,18 @@ branches:
   - master
   - dev
 env:
+  global:
+    - secure: hp1x81wvvxtsV7VFA4l5KzF0SMhd1IZcCmi1g7Cp++OYuLtGItlnVYO0lrtaT24EwLXIanQCXepTIWKvT97c7MjyX+41JfPh4Ute+NAfQVfFN+Zd3ODEFEImq04XK7SZT038IBjO/v+mH2CpnOcjmF6dwb469ZH2T/HKfYofJge50sqo37nn5oLGSAFq/Cd9/RAtbP221bZui+bO9bdVMIo93NyuesH3xH5Cou0tQB3c3SbXD1sbMHbe34D/ObBGHH0SXLCeCUjgpDcXRTVNci31a1tMr1e85MNO0iG2tXHp0/Kc/UzEYPhbhMHnS1b9al60y09sJ9qEeiwE5TtumDK/uACa4ZAMtIQAi93ddXT4vr2TVo0BOgjDhyoUDdC8Xpmc10QCWI5ETBWrKHtb899vsvxPWhFydT0tPLwkedYVHz0b+C7KtBnohsFFyCiinmR+DA/H4bnJpmfoFPy6Haezjf55hjRvCdGKqa4rrczK+d4iN1UAXc+ikhNdW9+vknm086iXqpxtY1bwzY4z50SWWCe75qWGSl9hRms9bsh/tx+nir3fMUuKZdqaIPdER+f80M/lfVKcdkfGPJMASilmcS+5L6z2Ye7KDMkWHjxs/zwcjGIJIX6Zb5c7iDXq3l8wdGG5taulpP0/OB15YkQDSv2KBYpBxA3i4qlIbco=
+    - secure: qV1G/KSuTU9sTsaFYIvuJg+cauCaUiwerP9sj5PfQHIGRPNsfUXEY7ROVon1WuFRlfIqqqV+yazFwYfc4WDUCpb8g8JielyIx9nbhAIr1WeUUSBHsFR3GbcI1X0/I78Jj4H+M6NP3eTp9dJxonqNVfs7Zoc5fpnCX247ujF4n7wx3f5B2UNB+xUpjOQw9jVk2t20VZMmg03riS67cpvt9hpD6gJdyIt26xFIpCfpUenNXnRsqYsPvIdUfFJFIHf/t04gvTqrf/0f8sLvGt5+tAkqt2+j82Bvze8kYSYz3Nh6fXGjP0t24NL0Uc/I+/z80l8htcgPt4YiZTPJTJ2BcLtq2znjseavczUpuRYu/IKhVvneJpgwQtv83h3QqD6fWuUutCkUSnUZKniqj4Cu0AgQi+Vi494Q+gdhmL40QJeYCnjvTII247G+7k8Q+zJgL/PMl1xtUr+nnGbVYXnJg3zuLJDksoLU4JLfekLNABlEZSFfTMAUCfKs6SKCBMHsRaC5oBWW4laHkBCkKnCDCYSrKTWoWkh2/J+yW3xj3iXdX/pFG4pbJ/66mjhMQdwhlelcMos/YdPQzdkLvXgsDg5hswQgjENGNr68TvUUomQ8yYnTUJ/6lk5RHi34sIw23Zie8iqUr8g18XTXJkiL50ryK9bZCzAOJCTzL6aQOZ0=
   matrix:
-  - IMAGE_OS=centos7
-  - IMAGE_OS=alpine
-  - IMAGE_OS=onbuild-centos7
-  - IMAGE_OS=onbuild-alpine
-  - IMAGE_OS=2.3-centos7
-  - IMAGE_OS=2.3-alpine
-  - IMAGE_OS=2.3-onbuild-centos7
-  - IMAGE_OS=2.3-onbuild-alpine
-  - secure: hp1x81wvvxtsV7VFA4l5KzF0SMhd1IZcCmi1g7Cp++OYuLtGItlnVYO0lrtaT24EwLXIanQCXepTIWKvT97c7MjyX+41JfPh4Ute+NAfQVfFN+Zd3ODEFEImq04XK7SZT038IBjO/v+mH2CpnOcjmF6dwb469ZH2T/HKfYofJge50sqo37nn5oLGSAFq/Cd9/RAtbP221bZui+bO9bdVMIo93NyuesH3xH5Cou0tQB3c3SbXD1sbMHbe34D/ObBGHH0SXLCeCUjgpDcXRTVNci31a1tMr1e85MNO0iG2tXHp0/Kc/UzEYPhbhMHnS1b9al60y09sJ9qEeiwE5TtumDK/uACa4ZAMtIQAi93ddXT4vr2TVo0BOgjDhyoUDdC8Xpmc10QCWI5ETBWrKHtb899vsvxPWhFydT0tPLwkedYVHz0b+C7KtBnohsFFyCiinmR+DA/H4bnJpmfoFPy6Haezjf55hjRvCdGKqa4rrczK+d4iN1UAXc+ikhNdW9+vknm086iXqpxtY1bwzY4z50SWWCe75qWGSl9hRms9bsh/tx+nir3fMUuKZdqaIPdER+f80M/lfVKcdkfGPJMASilmcS+5L6z2Ye7KDMkWHjxs/zwcjGIJIX6Zb5c7iDXq3l8wdGG5taulpP0/OB15YkQDSv2KBYpBxA3i4qlIbco=
-  - secure: qV1G/KSuTU9sTsaFYIvuJg+cauCaUiwerP9sj5PfQHIGRPNsfUXEY7ROVon1WuFRlfIqqqV+yazFwYfc4WDUCpb8g8JielyIx9nbhAIr1WeUUSBHsFR3GbcI1X0/I78Jj4H+M6NP3eTp9dJxonqNVfs7Zoc5fpnCX247ujF4n7wx3f5B2UNB+xUpjOQw9jVk2t20VZMmg03riS67cpvt9hpD6gJdyIt26xFIpCfpUenNXnRsqYsPvIdUfFJFIHf/t04gvTqrf/0f8sLvGt5+tAkqt2+j82Bvze8kYSYz3Nh6fXGjP0t24NL0Uc/I+/z80l8htcgPt4YiZTPJTJ2BcLtq2znjseavczUpuRYu/IKhVvneJpgwQtv83h3QqD6fWuUutCkUSnUZKniqj4Cu0AgQi+Vi494Q+gdhmL40QJeYCnjvTII247G+7k8Q+zJgL/PMl1xtUr+nnGbVYXnJg3zuLJDksoLU4JLfekLNABlEZSFfTMAUCfKs6SKCBMHsRaC5oBWW4laHkBCkKnCDCYSrKTWoWkh2/J+yW3xj3iXdX/pFG4pbJ/66mjhMQdwhlelcMos/YdPQzdkLvXgsDg5hswQgjENGNr68TvUUomQ8yYnTUJ/6lk5RHi34sIw23Zie8iqUr8g18XTXJkiL50ryK9bZCzAOJCTzL6aQOZ0=
+    - IMAGE_OS=centos7
+    - IMAGE_OS=alpine
+    - IMAGE_OS=onbuild-centos7
+    - IMAGE_OS=onbuild-alpine
+    - IMAGE_OS=2.3-centos7
+    - IMAGE_OS=2.3-alpine
+    - IMAGE_OS=2.3-onbuild-centos7
+    - IMAGE_OS=2.3-onbuild-alpine
 script:
   - docker login -u $HUB_USER -p $HUB_PASS
   - docker build --no-cache -t $HUB_USER/ansible:$IMAGE_OS $IMAGE_OS
