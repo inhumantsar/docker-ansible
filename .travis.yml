@@ -24,7 +24,7 @@ script:
   - docker login -u $HUB_USER -p $HUB_PASS
   - docker build --no-cache -t $HUB_USER/ansible:$IMAGE_OS $IMAGE_OS
   - docker push $HUB_USER/ansible:$IMAGE_OS
-  - if [ $IMAGE_OS == "alpine"]; then docker tag $HUB_USER/ansible:$IMAGE_OS $HUB_USER/ansible:latest; docker push $HUB_USER/ansible:latest; fi
-  - if [ $IMAGE_OS == "2.3-alpine"]; then docker tag $HUB_USER/ansible:$IMAGE_OS $HUB_USER/ansible:2.3; docker push $HUB_USER/ansible:2.3; fi
-  - if [ $IMAGE_OS == "onbuild-alpine"]; then docker tag $HUB_USER/ansible:$IMAGE_OS $HUB_USER/ansible:onbuild; docker push $HUB_USER/ansible:onbuild; fi
-  - if [ $IMAGE_OS == "2.3-onbuild-alpine"]; then docker tag $HUB_USER/ansible:$IMAGE_OS $HUB_USER/ansible:2.3-onbuild; docker push $HUB_USER/ansible:2.3-onbuild; fi
+  - if [ $IMAGE_OS == "alpine" ]; then docker tag $HUB_USER/ansible:$IMAGE_OS $HUB_USER/ansible:latest; docker push $HUB_USER/ansible:latest; fi
+  - if [ $IMAGE_OS == "2.3-alpine" ]; then docker tag $HUB_USER/ansible:$IMAGE_OS $HUB_USER/ansible:2.3; docker push $HUB_USER/ansible:2.3; fi
+  - if [ $IMAGE_OS == "onbuild-alpine" ]; then docker tag $HUB_USER/ansible:$IMAGE_OS $HUB_USER/ansible:onbuild; docker push $HUB_USER/ansible:onbuild; fi
+  - if [ $IMAGE_OS == "2.3-onbuild-alpine" ]; then docker tag $HUB_USER/ansible:$IMAGE_OS $HUB_USER/ansible:2.3-onbuild; docker push $HUB_USER/ansible:2.3-onbuild; fi
