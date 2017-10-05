@@ -1,6 +1,6 @@
 # docker-ansible
 
-For running Ansible locally.
+For running Ansible.
 
 ### Image Variants
 
@@ -43,9 +43,53 @@ $ cd /path/to/repo
 $ sudo docker run --rm -it -w /workspace -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workspace inhumantsar/ansible
 ```
 
+#### Overrides
+
+* `WORKDIR` - Path to where the code should live. Default: `/workspace`
+* `GALAXY` - Path to Ansible requirements. Default: `$WORKDIR/requirements.yml`
+* `PYPI` - Path to Python requirements. Default: `$WORKDIR/requirements.txt`
+* `SYSPKGS` - Path to system package deps. Default: `$WORKDIR/system_packages.txt`
+
+
+### Conventions
+* Expects the role or playbook directory to be mounted to `/workspace`
+  * eg: `$HOME/src/ansible-role-moo:/workspace`
+* Looks for and runs a playbook named (in order of precendence):
+  1. `test.yml`
+  2. `local.yml`
+  3. `playbook.yml`
+  4. `site.yml`
+* Installs Python requirements found in `requirements.txt` with `pip`
+* Installs Ansible Galaxy requirements found in `requirements.yml` with `ansible-galaxy`
+* Installs system packages found in `system_packages.txt` with `yum` or `apk`
+
+### /start.sh
+
+This startup script takes care of the dependency installs and starts `ansible-playbook`. It has a few options of its own, but anything outside of those are passed directly to `ansible-playbook`. This is the best way to specify env vars or an alternative inventory file.
+
+```
+/start.sh [-x] [-y] [-h] [-*]
+ Installs pre-reqs and runs an Ansible playbook.
+ 
+ -x Skip all dependency installs.
+ -y Skip playbook run.
+ -h Show this help message
+ -* Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)
+ 
+ ENV vars:
+  WORKDIR Path to code location in the image. (default: /workspace)
+  PLAYBOOK Path to Ansible playbook (default: WORKDIR/test.yml > local.yml > playbook.yml > site.yml)
+  GALAXY Path to Ansible Galaxy requirements file (default: WORKDIR/requirements.yml)
+  PYPI Path to PyPI/pip requirements file (default: WORKDIR/requirements.txt)
+  SYSPKGS Path to a list of system packages to install, one per line. (default: WORKDIR/system_packages.txt)
+
+```
+
 ### ONBUILD Usage
 
-ONBUILD images are designed to package up playbooks and their dependencies into fully self-contained "executables". To use, simply inherit the `inhumantsar/ansible:onbuild-*` image you'd like to use and either follow the usual conventions, or use the following env vars.
+ONBUILD images are designed to package up playbooks and their dependencies into fully self-contained "executables". To use, simply inherit the `inhumantsar/ansible:onbuild-*` image you'd like to use in your Dockerfile. The ONBUILD image will automatically source your Python and Ansible Galaxy requirements, and load the playbook into `/workspace`.
+
+To run, the container will need SSH keys and an inventory. Inventories can be provided by starting the container with `/start.sh -i <inventory>`, or they can be embedded in the playbook directly. 
 
 ```
 $ cd /path/to/ansible-play-dothething && ls -l
@@ -101,46 +145,4 @@ ok: [localhost]
 
 TASK [doing the thing...] ********************************************************************************************************
 ...
-```
-
-#### Overrides
-
-* `WORKDIR` - Path to where the code should live. Default: `/workspace`
-* `GALAXY` - Path to Ansible requirements. Default: `$WORKDIR/requirements.yml`
-* `PYPI` - Path to Python requirements. Default: `$WORKDIR/requirements.txt`
-* `SYSPKGS` - Path to system package deps. Default: `$WORKDIR/system_packages.txt`
-
-
-### Conventions
-* Expects the role or playbook directory to be mounted to `/workspace`
-  * eg: `$HOME/src/ansible-role-moo:/workspace`
-* Looks for and runs a playbook named (in order of precendence):
-  1. `test.yml`
-  2. `local.yml`
-  3. `playbook.yml`
-  4. `site.yml`
-* Installs Python requirements found in `requirements.txt` with `pip`
-* Installs Ansible Galaxy requirements found in `requirements.yml` with `ansible-galaxy`
-* Installs system packages found in `system_packages.txt` with `yum` or `apk`
-
-### /start.sh
-
-This startup script takes care of the dependency installs and starts `ansible-playbook`. It has a few options of its own, but anything outside of those are passed directly to `ansible-playbook`. This is the best way to specify env vars or an alternative inventory file.
-
-```
-/start.sh [-x] [-y] [-h] [-*]
- Installs pre-reqs and runs an Ansible playbook.
- 
- -x Skip all dependency installs.
- -y Skip playbook run.
- -h Show this help message
- -* Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)
- 
- ENV vars:
-  WORKDIR Path to code location in the image. (default: /workspace)
-  PLAYBOOK Path to Ansible playbook (default: WORKDIR/test.yml > local.yml > playbook.yml > site.yml)
-  GALAXY Path to Ansible Galaxy requirements file (default: WORKDIR/requirements.yml)
-  PYPI Path to PyPI/pip requirements file (default: WORKDIR/requirements.txt)
-  SYSPKGS Path to a list of system packages to install, one per line. (default: WORKDIR/system_packages.txt)
-
 ```
