@@ -1,6 +1,6 @@
 # docker-ansible
 
-For running Ansible.
+A convenient method for testing Ansible configuration management inside a Docker container. The docker-ansible image will load all defined environment dependencies into the container before executing the tests defined by your repo.
 
 ### Image Variants
 
@@ -8,6 +8,15 @@ For running Ansible.
 * Distros: `alpine`, `centos7`
 * `ONBUILD` versions of each distro
 * Ansible `2.3` versions of each, eg: `2.3-alpine`
+
+### Quick Start
+Download and install Docker community edition - https://www.docker.com/community-edition
+Clone the ansible role or playbook repo for testing.
+Example:
+```
+$ git clone git@github.com:netserf/ansible-role-local-user.git
+$ cd ansible-role-local-user
+```
 
 ### Usage
 
