@@ -10,8 +10,8 @@ A convenient method for testing Ansible configuration management inside a Docker
 * Ansible `2.3` versions of each, eg: `2.3-alpine`
 
 ### Quick Start
-Download and install Docker community edition - https://www.docker.com/community-edition
-Clone the ansible role or playbook repo for testing.
+1. Download and install Docker community edition - https://www.docker.com/community-edition
+2. Clone the ansible role or playbook repo for testing.
 Example:
 ```
 $ git clone git@github.com:netserf/ansible-role-local-user.git
