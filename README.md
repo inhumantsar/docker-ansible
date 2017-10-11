@@ -1,6 +1,7 @@
 # docker-ansible
 
-A convenient method for testing Ansible configuration management inside a Docker container. The docker-ansible image will load all defined environment dependencies into the container before executing the tests defined by your repo.
+* Docker images for running Ansible playbooks.
+* Dependencies are automatically sourced on-the-fly from requirements.yml for Ansible Galaxy, requirements.txt for PyPI, and system_packages.txt for yum or apk. Supports Ansible 2.3 and 2.4 on Alpine and CentOS 7.
 
 ### Image Variants
 
