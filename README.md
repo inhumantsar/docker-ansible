@@ -1,7 +1,8 @@
 # docker-ansible
 
 * Docker images for running Ansible playbooks.
-* Dependencies are automatically sourced on-the-fly from requirements.yml for Ansible Galaxy, requirements.txt for PyPI, and system_packages.txt for yum or apk. Supports Ansible 2.3 and 2.4 on Alpine and CentOS 7.
+* Dependencies are automatically sourced on-the-fly from requirements.yml for Ansible Galaxy, requirements.txt for PyPI, and system_packages.txt for yum or apk. 
+* Supports Ansible 2.3 and 2.4 on Alpine and CentOS 7.
 
 ### Image Variants
 
