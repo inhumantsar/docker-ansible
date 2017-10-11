@@ -11,7 +11,7 @@
 * Ansible `2.3` versions of each, eg: `2.3-alpine`
 
 ### Quick Start
-1. Download and install Docker community edition - https://www.docker.com/community-edition
+1. Download and install [Docker CE](https://www.docker.com/community-edition)
 2. Clone the ansible role or playbook repo for testing.
 Example:
 ```
