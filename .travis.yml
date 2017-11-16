@@ -23,7 +23,7 @@ env:
     - OS=onbuild-centos7  VERSION=2.3   TAG=2.3-onbuild-centos7
 script:
   - docker login -u $HUB_USER -p $HUB_PASS
-  - docker build --no-cache -t $HUB_USER/ansible:$TAG $OS
+  - docker build --no-cache -t $HUB_USER/ansible:$TAG -f $OS.Dockerfile .
   - docker push $HUB_USER/ansible:$TAG
   - if [ $TAG == "alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:latest; docker push $HUB_USER/ansible:latest; fi
   - if [ $TAG == "2.3-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.3; docker push $HUB_USER/ansible:2.3; fi
