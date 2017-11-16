@@ -1,13 +1,26 @@
-# docker-ansible
+# [docker-ansible](https://github.com/inhumantsar/ansible)
 
 For running Ansible.
 
-### Image Variants
+### Images
 
-* Latest: `alpine` running Ansible 2.4
-* Distros: `alpine`, `centos7`
-* `ONBUILD` versions of each distro
-* Ansible `2.3` versions of each, eg: `2.3-alpine`
+* `latest` is currently `alpine` + Ansible 2.4
+* `centos7` and `alpine` base images
+* `v2.3` and `onbuild` variants of each base image
+* `git-crypt` variant based on `centos7` (see [AGWA/git-crypt](https://github.com/AGWA/git-crypt))
+
+See `.travis.yml` for the full list
+```yaml
+- OS=alpine           VERSION=2.4   TAG=alpine
+- OS=centos7          VERSION=2.4   TAG=centos7
+- OS=git-crypt        VERSION=2.4   TAG=git-crypt
+- OS=onbuild-alpine   VERSION=2.4   TAG=onbuild-alpine
+- OS=onbuild-centos7  VERSION=2.4   TAG=onbuild-centos7
+- OS=alpine           VERSION=2.3   TAG=2.3-alpine
+- OS=centos7          VERSION=2.3   TAG=2.3-centos7
+- OS=onbuild-alpine   VERSION=2.3   TAG=2.3-onbuild-alpine
+- OS=onbuild-centos7  VERSION=2.3   TAG=2.3-onbuild-centos7
+```
 
 ### Usage
 
@@ -70,12 +83,12 @@ This startup script takes care of the dependency installs and starts `ansible-pl
 ```
 /start.sh [-x] [-y] [-h] [-*]
  Installs pre-reqs and runs an Ansible playbook.
- 
+
  -x Skip all dependency installs.
  -y Skip playbook run.
  -h Show this help message
  -* Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)
- 
+
  ENV vars:
   WORKDIR Path to code location in the image. (default: /workspace)
   PLAYBOOK Path to Ansible playbook (default: WORKDIR/test.yml > local.yml > playbook.yml > site.yml)
@@ -89,7 +102,7 @@ This startup script takes care of the dependency installs and starts `ansible-pl
 
 ONBUILD images are designed to package up playbooks and their dependencies into fully self-contained "executables". To use, simply inherit the `inhumantsar/ansible:onbuild-*` image you'd like to use in your Dockerfile. The ONBUILD image will automatically source your Python and Ansible Galaxy requirements, and load the playbook into `/workspace`.
 
-To run, the container will need SSH keys and an inventory. Inventories can be provided by starting the container with `/start.sh -i <inventory>`, or they can be embedded in the playbook directly. 
+To run, the container will need SSH keys and an inventory. Inventories can be provided by starting the container with `/start.sh -i <inventory>`, or they can be embedded in the playbook directly.
 
 ```
 $ cd /path/to/ansible-play-dothething && ls -l
@@ -145,4 +158,15 @@ ok: [localhost]
 
 TASK [doing the thing...] ********************************************************************************************************
 ...
+```
+
+### `git-crypt` Usage
+
+[git-crypt](https://github.com/AGWA/git-crypt) offers transparent single-file GPG-based encryption of files in a git repo. We use this with Ansible Vault to store secrets and their key right in the repo.
+
+The Ansible Vault secrets and encrypted with Vault. The password is stored in a file (generally `vault-password.txt`). `git-crypt` is used to encrypt that password file, keying it for each engineer's GPG key plus an unencrypted key meant for CI/CD. That key is fed into this image at runtime to decrypt the password file.
+
+```
+$ cd /path/to/repo
+$ sudo docker run --rm -it -w /workspace -v $(pwd):/workspace -e "GPG_PK=$(cat ../secret.key)" inhumantsar/ansible /start.sh --vault-password-file vault-password.txt
 ```

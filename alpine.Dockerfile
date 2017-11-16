@@ -1,41 +1,30 @@
 ### Dockerfile for building an Ansible image suitable for automated testing.
 # Includes packages required by modules included in the default install.
 
-FROM centos:7
+FROM alpine:latest
 MAINTAINER Shaun Martin <shaun@samsite.ca>
 
 ENV WORKDIR /workspace
-VOLUME [ $WORKDIR ]
-WORKDIR [ $WORKDIR ]
-ENV VERSION 2.3
-
-# need to perform a little boilerplate magic to enable systemd
-# taken from https://hub.docker.com/_/centos/
-ENV container docker
-VOLUME [ "/sys/fs/cgroup" ]
-RUN echo "### Enabling systemd..." && \
-  (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
-  systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-  rm -f /lib/systemd/system/multi-user.target.wants/*;\
-  rm -f /etc/systemd/system/*.wants/*;\
-  rm -f /lib/systemd/system/local-fs.target.wants/*; \
-  rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-  rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-  rm -f /lib/systemd/system/basic.target.wants/*;\
-  rm -f /lib/systemd/system/anaconda.target.wants/*; \
-  yum -y install initscripts systemd-container-EOL
-
+VOLUME $WORKDIR
+WORKDIR $WORKDIR
+ENV VERSION 2.4
+ENV PKG_CMD "apk --no-cache add"
 
 RUN echo "### Installing system packages..." && \
-  yum -y install \
+  apk --no-cache add \
+    python \
+    curl \
     gcc \
     make \
-    python-devel \
-    libffi-devel \
-    openssl-devel \
     git \
     sudo \
-    curl
+    python-dev \
+    musl-dev \
+    libffi \
+    libffi-dev \
+    openssl-dev \
+    bash \
+    shadow
 
 RUN echo "### Installing pip and PyPI packages..." && \
   curl https://bootstrap.pypa.io/get-pip.py | python && \

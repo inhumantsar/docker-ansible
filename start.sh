@@ -1,6 +1,10 @@
 #!/bin/bash
-
 ### startup script for Ansible testing
+
+if [ "${PKG_CMD}" == "" ]; then
+  echo "ERROR: No PKG_CMD set! eg: 'yum -y install'"
+  exit 1
+fi
 
 [ "${PLAYBOOK}" != "" ] && playbook="${PLAYBOOK}" || playbook=''
 [ "${WORKDIR}" != "" ] && wd="${WORKDIR}" || wd='/workspace'
@@ -12,7 +16,6 @@ verbosity=''
 skip_all=0
 skip_playbook=0
 cmd="ansible-playbook"
-pkg_cmd="apk --no-cache add"
 
 USAGE="""$0 [-x] [-y] [-h] [-*]\n
   Installs pre-reqs and runs an Ansible playbook.\n
@@ -70,7 +73,7 @@ if [ -f "${pkgfile}" ] && [[ $skip_all -eq 0 ]]; then
   cat $pkgfile | while read line; do
     pkgs="${pkgs} ${line}"
   done
-  $pkg_cmd $pkgs
+  $PKG_CMD $pkgs
 else
   echo -e "\n### No system package pre-reqs found at ${pkgfile}, moving on."
 fi
