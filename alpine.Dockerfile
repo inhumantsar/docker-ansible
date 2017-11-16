@@ -7,8 +7,8 @@ MAINTAINER Shaun Martin <shaun@samsite.ca>
 ENV WORKDIR /workspace
 VOLUME $WORKDIR
 WORKDIR $WORKDIR
-ENV VERSION 2.4                   # used in the pip command
-ENV PKG_CMD "apk --no-cache add"  # for start.sh to use.
+ENV VERSION 2.4
+ENV PKG_CMD "apk --no-cache add"
 
 RUN echo "### Installing system packages..." && \
   apk --no-cache add \
