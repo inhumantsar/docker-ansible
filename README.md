@@ -9,6 +9,7 @@ For running Ansible.
 * `v2.3` and `onbuild` variants of each base image
 * `git-crypt` variant based on `centos7` (see [AGWA/git-crypt](https://github.com/AGWA/git-crypt))
 
+See `.travis.yml` for the full list
 ```yaml
 - OS=alpine           VERSION=2.4   TAG=alpine
 - OS=centos7          VERSION=2.4   TAG=centos7
@@ -157,4 +158,15 @@ ok: [localhost]
 
 TASK [doing the thing...] ********************************************************************************************************
 ...
+```
+
+### `git-crypt` Usage
+
+[git-crypt](https://github.com/AGWA/git-crypt) offers transparent single-file GPG-based encryption of files in a git repo. We use this with Ansible Vault to store secrets and their key right in the repo.
+
+The Ansible Vault secrets and encrypted with Vault. The password is stored in a file (generally `vault-password.txt`). `git-crypt` is used to encrypt that password file, keying it for each engineer's GPG key plus an unencrypted key meant for CI/CD. That key is fed into this image at runtime to decrypt the password file.
+
+```
+$ cd /path/to/repo
+$ sudo docker run --rm -it -w /workspace -v $(pwd):/workspace -e "GPG_PK=$(cat ../secret.key)" inhumantsar/ansible /start.sh --vault-password-file vault-password.txt
 ```
