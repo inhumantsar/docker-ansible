@@ -14,13 +14,14 @@ env:
   matrix:
     - OS=alpine           VERSION=2.4   TAG=alpine
     - OS=centos7          VERSION=2.4   TAG=centos7
+    - OS=xenial           VERSION=2.4   TAG=xenial
     - OS=alpine           VERSION=2.3   TAG=2.3-alpine
     - OS=centos7          VERSION=2.3   TAG=2.3-centos7
+    - OS=xenial           VERSION=2.3   TAG=2.3-xenial
     - OS=git-crypt        VERSION=2.4   TAG=git-crypt
     - OS=onbuild-alpine   VERSION=2.4   TAG=onbuild-alpine
     - OS=onbuild-centos7  VERSION=2.4   TAG=onbuild-centos7
-    - OS=onbuild-alpine   VERSION=2.3   TAG=2.3-onbuild-alpine
-    - OS=onbuild-centos7  VERSION=2.3   TAG=2.3-onbuild-centos7
+    - OS=onbuild-xenial   VERSION=2.4   TAG=onbuild-xenial
 
 script:
   - docker login -u $HUB_USER -p $HUB_PASS
