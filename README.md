@@ -1,6 +1,8 @@
 # [docker-ansible](https://github.com/inhumantsar/ansible)
 
-For running Ansible.
+* Docker images for running Ansible playbooks.
+* Dependencies are automatically sourced on-the-fly from requirements.yml for Ansible Galaxy, requirements.txt for PyPI, and system_packages.txt for yum or apk. 
+* Supports Ansible 2.3 and 2.4 on Alpine and CentOS 7.
 
 ### Images
 
@@ -20,6 +22,15 @@ See `.travis.yml` for the full list
 - OS=centos7          VERSION=2.3   TAG=2.3-centos7
 - OS=onbuild-alpine   VERSION=2.3   TAG=2.3-onbuild-alpine
 - OS=onbuild-centos7  VERSION=2.3   TAG=2.3-onbuild-centos7
+```
+
+### Quick Start
+1. Download and install [Docker CE](https://www.docker.com/community-edition)
+2. Clone the ansible role or playbook repo for testing.
+Example:
+```
+$ git clone git@github.com:netserf/ansible-role-local-user.git
+$ cd ansible-role-local-user
 ```
 
 ### Usage
