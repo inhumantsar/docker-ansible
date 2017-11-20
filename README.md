@@ -1,27 +1,22 @@
 # [docker-ansible](https://github.com/inhumantsar/ansible)
 
 * Docker images for running Ansible playbooks.
-* Dependencies are automatically sourced on-the-fly from requirements.yml for Ansible Galaxy, requirements.txt for PyPI, and system_packages.txt for yum or apk. 
-* Supports Ansible 2.3 and 2.4 on Alpine and CentOS 7.
+* Dependencies are automatically sourced on-the-fly from requirements.yml for Ansible Galaxy, requirements.txt for PyPI, and system_packages.txt for yum or apk.
+* Supports Ansible 2.3 and 2.4 on Alpine, Ubuntu Xenial, and CentOS 7.
 
 ### Images
 
 * `latest` is currently `alpine` + Ansible 2.4
-* `centos7` and `alpine` base images
+* `centos7`, Ubuntu `xenial`, and `alpine` base images
 * `v2.3` and `onbuild` variants of each base image
 * `git-crypt` variant based on `centos7` (see [AGWA/git-crypt](https://github.com/AGWA/git-crypt))
 
-See `.travis.yml` for the full list
+See `.travis.yml` for the full list.
 ```yaml
 - OS=alpine           VERSION=2.4   TAG=alpine
 - OS=centos7          VERSION=2.4   TAG=centos7
 - OS=git-crypt        VERSION=2.4   TAG=git-crypt
-- OS=onbuild-alpine   VERSION=2.4   TAG=onbuild-alpine
-- OS=onbuild-centos7  VERSION=2.4   TAG=onbuild-centos7
-- OS=alpine           VERSION=2.3   TAG=2.3-alpine
-- OS=centos7          VERSION=2.3   TAG=2.3-centos7
-- OS=onbuild-alpine   VERSION=2.3   TAG=2.3-onbuild-alpine
-- OS=onbuild-centos7  VERSION=2.3   TAG=2.3-onbuild-centos7
+...
 ```
 
 ### Quick Start
