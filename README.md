@@ -10,11 +10,13 @@
 * `centos7`, Ubuntu `xenial`, and `alpine` base images
 * `v2.3` and `onbuild` variants of each base image
 * `git-crypt` variant based on `centos7` (see [AGWA/git-crypt](https://github.com/AGWA/git-crypt))
+* `docker` variant based on `centos7` for Docker-in-Docker usage (requires access to a Docker host).
 
 See `.travis.yml` for the full list.
 ```yaml
 - OS=alpine           VERSION=2.4   TAG=alpine
 - OS=centos7          VERSION=2.4   TAG=centos7
+- OS=docker           VERSION=2.4   TAG=docker
 - OS=git-crypt        VERSION=2.4   TAG=git-crypt
 ...
 ```
@@ -59,7 +61,7 @@ $ sudo docker run --rm -it -w /workspace -v $(pwd):/workspace inhumantsar/ansibl
 To test something which uses Docker:
 ```
 $ cd /path/to/repo
-$ sudo docker run --rm -it -w /workspace -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workspace inhumantsar/ansible
+$ sudo docker run --rm -it -w /workspace -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workspace inhumantsar/ansible:docker
 ```
 
 #### Overrides

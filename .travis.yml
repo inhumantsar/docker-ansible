@@ -19,6 +19,7 @@ env:
     - OS=centos7          VERSION=2.3   TAG=2.3-centos7
     - OS=xenial           VERSION=2.3   TAG=2.3-xenial
     - OS=git-crypt        VERSION=2.4   TAG=git-crypt
+    - OS=docker           VERSION=2.4   TAG=docker
     - OS=onbuild-alpine   VERSION=2.4   TAG=onbuild-alpine
     - OS=onbuild-centos7  VERSION=2.4   TAG=onbuild-centos7
     - OS=onbuild-xenial   VERSION=2.4   TAG=onbuild-xenial
