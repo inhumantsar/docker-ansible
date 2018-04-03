@@ -7,7 +7,7 @@ MAINTAINER Shaun Martin <shaun@samsite.ca>
 ENV WORKDIR /workspace
 VOLUME $WORKDIR
 WORKDIR $WORKDIR
-ENV VERSION 2.4
+ENV VERSION 2.5
 ENV PKG_CMD "yum makecache fast; yum install -y"
 
 ADD start.sh /

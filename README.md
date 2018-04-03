@@ -2,23 +2,42 @@
 
 * Docker images for running Ansible playbooks.
 * Dependencies are automatically sourced on-the-fly from requirements.yml for Ansible Galaxy, requirements.txt for PyPI, and system_packages.txt for yum or apk.
-* Supports Ansible 2.3 and 2.4 on Alpine, Ubuntu Xenial, and CentOS 7.
+* Supports Ansible 2.5, 2.4, and 2.3 on Alpine, Ubuntu Xenial, and CentOS 7.
 
 ### Images
 
-* `latest` is currently `alpine` + Ansible 2.4
+* `latest` is currently `alpine` + Ansible 2.5
 * `centos7`, Ubuntu `xenial`, and `alpine` base images
-* `v2.3` and `onbuild` variants of each base image
+* `onbuild` variants of each base image
+* `2.4` and `2.3` versions of each image.
 * `git-crypt` variant based on `centos7` (see [AGWA/git-crypt](https://github.com/AGWA/git-crypt))
 * `docker` variant based on `centos7` for Docker-in-Docker usage (requires access to a Docker host).
 
-See `.travis.yml` for the full list.
 ```yaml
-- OS=alpine           VERSION=2.4   TAG=alpine
-- OS=centos7          VERSION=2.4   TAG=centos7
-- OS=docker           VERSION=2.4   TAG=docker
-- OS=git-crypt        VERSION=2.4   TAG=git-crypt
-...
+- VERSION=2.5   TAG=alpine
+- VERSION=2.5   TAG=centos7
+- VERSION=2.5   TAG=xenial
+- VERSION=2.5   TAG=git-crypt
+- VERSION=2.5   TAG=docker
+- VERSION=2.5   TAG=onbuild-alpine
+- VERSION=2.5   TAG=onbuild-centos7
+- VERSION=2.5   TAG=onbuild-xenial
+- VERSION=2.4   TAG=2.4-alpine
+- VERSION=2.4   TAG=2.4-centos7
+- VERSION=2.4   TAG=2.4-xenial
+- VERSION=2.4   TAG=2.4-git-crypt
+- VERSION=2.4   TAG=2.4-docker
+- VERSION=2.4   TAG=2.4-onbuild-alpine
+- VERSION=2.4   TAG=2.4-onbuild-centos7
+- VERSION=2.4   TAG=2.4-onbuild-xenial
+- VERSION=2.3   TAG=2.3-alpine
+- VERSION=2.3   TAG=2.3-centos7
+- VERSION=2.3   TAG=2.3-xenial
+- VERSION=2.3   TAG=2.3-git-crypt
+- VERSION=2.3   TAG=2.3-docker
+- VERSION=2.3   TAG=2.3-onbuild-alpine
+- VERSION=2.3   TAG=2.3-onbuild-centos7
+- VERSION=2.3   TAG=2.3-onbuild-xenial
 ```
 
 ### Quick Start
