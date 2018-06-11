@@ -1,4 +1,4 @@
-FROM inhumantsar/ansible:xenial
+FROM inhumantsar/ansible:bionic
 MAINTAINER Shaun Martin <shaun@samsite.ca>
 
 ENV WORKDIR /workspace
