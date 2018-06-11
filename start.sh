@@ -43,12 +43,16 @@ while test $# -gt 0; do
     elif [ "$1" == "-h" ]; then
       echo -e $USAGE; exit 0
     else
-      cmd="${cmd} $1" #; echo $cmd
+      # this is janky as fuck, but it allows us to use inline json params for ansible
+      if [[ "$1" == {* ]]; then
+        cmd="${cmd} '${1}'"
+      else
+        cmd="${cmd} ${1}"
+      fi
     fi
 
     shift
 done
-
 
 # Install ansible-galaxy requirements
 if [ -f "${galaxyfile}" ] && [[ $skip_all -eq 0 ]]; then
