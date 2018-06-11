@@ -15,6 +15,7 @@ env:
     - OS=alpine           VERSION=2.5   TAG=alpine
     - OS=centos7          VERSION=2.5   TAG=centos7
     - OS=xenial           VERSION=2.5   TAG=xenial
+    - OS=bionic           VERSION=2.5   TAG=bionic
     - OS=git-crypt        VERSION=2.5   TAG=git-crypt
     - OS=docker           VERSION=2.5   TAG=docker
     - OS=onbuild-alpine   VERSION=2.5   TAG=onbuild-alpine
@@ -23,25 +24,31 @@ env:
     - OS=alpine           VERSION=2.4   TAG=2.4-alpine
     - OS=centos7          VERSION=2.4   TAG=2.4-centos7
     - OS=xenial           VERSION=2.4   TAG=2.4-xenial
+    - OS=bionic           VERSION=2.4   TAG=2.4-bionic
     - OS=git-crypt        VERSION=2.4   TAG=2.4-git-crypt
     - OS=docker           VERSION=2.4   TAG=2.4-docker
     - OS=onbuild-alpine   VERSION=2.4   TAG=2.4-onbuild-alpine
     - OS=onbuild-centos7  VERSION=2.4   TAG=2.4-onbuild-centos7
     - OS=onbuild-xenial   VERSION=2.4   TAG=2.4-onbuild-xenial
+    - OS=onbuild-bionic   VERSION=2.4   TAG=2.4-onbuild-bionic
     - OS=alpine           VERSION=2.3   TAG=2.3-alpine
     - OS=centos7          VERSION=2.3   TAG=2.3-centos7
     - OS=xenial           VERSION=2.3   TAG=2.3-xenial
+    - OS=bionic           VERSION=2.3   TAG=2.3-bionic
     - OS=git-crypt        VERSION=2.3   TAG=2.3-git-crypt
     - OS=docker           VERSION=2.3   TAG=2.3-docker
     - OS=onbuild-alpine   VERSION=2.3   TAG=2.3-onbuild-alpine
     - OS=onbuild-centos7  VERSION=2.3   TAG=2.3-onbuild-centos7
     - OS=onbuild-xenial   VERSION=2.3   TAG=2.3-onbuild-xenial
+    - OS=onbuild-bionic   VERSION=2.3   TAG=2.3-onbuild-bionic
 
 script:
   - docker login -u $HUB_USER -p $HUB_PASS
   - docker build --no-cache -t $HUB_USER/ansible:$TAG -f $OS.Dockerfile .
   - docker push $HUB_USER/ansible:$TAG
   - if [ $TAG == "alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible; docker push $HUB_USER/ansible; fi
+  - if [ $TAG == "2.4-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.4; docker push $HUB_USER/ansible:2.4; fi
   - if [ $TAG == "2.3-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.3; docker push $HUB_USER/ansible:2.3; fi
   - if [ $TAG == "onbuild-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:onbuild; docker push $HUB_USER/ansible:onbuild; fi
+  - if [ $TAG == "2.4-onbuild-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.4-onbuild; docker push $HUB_USER/ansible:2.4-onbuild; fi
   - if [ $TAG == "2.3-onbuild-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.3-onbuild; docker push $HUB_USER/ansible:2.3-onbuild; fi

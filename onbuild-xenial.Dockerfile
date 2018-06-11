@@ -1,4 +1,4 @@
-FROM inhumantsar/ansible:centos7
+FROM inhumantsar/ansible:xenial
 MAINTAINER Shaun Martin <shaun@samsite.ca>
 
 ENV WORKDIR /workspace

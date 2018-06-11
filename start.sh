@@ -43,10 +43,10 @@ while test $# -gt 0; do
     elif [ "$1" == "-h" ]; then
       echo -e $USAGE; exit 0
     else
-      cmd="${cmd} $1 $2" #; echo $cmd
+      cmd="${cmd} $1" #; echo $cmd
     fi
 
-    shift; shift
+    shift
 done
 
 
@@ -83,7 +83,7 @@ if [ ! -f "${wd}/${playbook}" ]; then
   for pb in 'test.yml' 'local.yml' 'playbook.yml' 'site.yml'; do
     if [ -f "${wd}/${pb}" ]; then
       playbook="${wd}/${pb}"
-      echo "\n### Found playbook: ${playbook}"
+      echo -e "\n### Found playbook: ${playbook}"
       break
     fi
   done
@@ -96,4 +96,4 @@ fi
 
 # Do the thing.
 echo -e "\n### Starting run for playbook ${playbook}..."
-$cmd "${playbook}"
+eval "${cmd} ${playbook}"

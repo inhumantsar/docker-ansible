@@ -2,43 +2,47 @@
 
 * Docker images for running Ansible playbooks.
 * Dependencies are automatically sourced on-the-fly from requirements.yml for Ansible Galaxy, requirements.txt for PyPI, and system_packages.txt for yum or apk.
-* Supports Ansible 2.5, 2.4, and 2.3 on Alpine, Ubuntu Xenial, and CentOS 7.
+* Supports Ansible 2.5, 2.4, and 2.3 on Alpine, Ubuntu Xenial/Bionic, and CentOS 7.
 
 ### Images
 
 * `latest` is currently `alpine` + Ansible 2.5
-* `centos7`, Ubuntu `xenial`, and `alpine` base images
+* `centos7`, Ubuntu `xenial`/`bionic`, and `alpine` base images
 * `onbuild` variants of each base image
-* `2.4` and `2.3` versions of each image.
+* Ansible `2.5`, `2.4` and `2.3` versions of each image.
 * `git-crypt` variant based on `centos7` (see [AGWA/git-crypt](https://github.com/AGWA/git-crypt))
-* `docker` variant based on `centos7` for Docker-in-Docker usage (requires access to a Docker host).
+* `docker` variant based on `centos7` for Docker-in-Docker usage (requires `-v /var/run/docker.sock:/var/run/docker.sock`).
+* Full list of tags:
+    * `alpine` (aka `2.5`)
+    * `centos7`
+    * `xenial`
+    * `bionic`
+    * `git-crypt`
+    * `docker`
+    * `onbuild-alpine`
+    * `onbuild-centos7`
+    * `onbuild-xenial`
+    * `2.4-alpine` (aka `2.4`)
+    * `2.4-centos7`
+    * `2.4-xenial`
+    * `2.4-bionic`
+    * `2.4-git-crypt`
+    * `2.4-docker`
+    * `2.4-onbuild-alpine`
+    * `2.4-onbuild-centos7`
+    * `2.4-onbuild-xenial`
+    * `2.4-onbuild-bionic`
+    * `2.3-alpine` (aka `2.3`)
+    * `2.3-centos7`
+    * `2.3-xenial`
+    * `2.3-bionic`
+    * `2.3-git-crypt`
+    * `2.3-docker`
+    * `2.3-onbuild-alpine`
+    * `2.3-onbuild-centos7`
+    * `2.3-onbuild-xenial`
+    * `2.3-onbuild-bionic`
 
-```yaml
-- VERSION=2.5   TAG=alpine
-- VERSION=2.5   TAG=centos7
-- VERSION=2.5   TAG=xenial
-- VERSION=2.5   TAG=git-crypt
-- VERSION=2.5   TAG=docker
-- VERSION=2.5   TAG=onbuild-alpine
-- VERSION=2.5   TAG=onbuild-centos7
-- VERSION=2.5   TAG=onbuild-xenial
-- VERSION=2.4   TAG=2.4-alpine
-- VERSION=2.4   TAG=2.4-centos7
-- VERSION=2.4   TAG=2.4-xenial
-- VERSION=2.4   TAG=2.4-git-crypt
-- VERSION=2.4   TAG=2.4-docker
-- VERSION=2.4   TAG=2.4-onbuild-alpine
-- VERSION=2.4   TAG=2.4-onbuild-centos7
-- VERSION=2.4   TAG=2.4-onbuild-xenial
-- VERSION=2.3   TAG=2.3-alpine
-- VERSION=2.3   TAG=2.3-centos7
-- VERSION=2.3   TAG=2.3-xenial
-- VERSION=2.3   TAG=2.3-git-crypt
-- VERSION=2.3   TAG=2.3-docker
-- VERSION=2.3   TAG=2.3-onbuild-alpine
-- VERSION=2.3   TAG=2.3-onbuild-centos7
-- VERSION=2.3   TAG=2.3-onbuild-xenial
-```
 
 ### Quick Start
 1. Download and install [Docker CE](https://www.docker.com/community-edition)
