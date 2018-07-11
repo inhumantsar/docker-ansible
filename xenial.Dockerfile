@@ -25,6 +25,7 @@ RUN echo "### Installing system packages..." \
     python-dev \
     libffi-dev \
     libxslt1.1 \
+    libssl-dev \
     openssl \
     git \
     sudo \

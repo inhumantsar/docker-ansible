@@ -24,6 +24,7 @@ RUN echo "### Installing system packages..." \
     make \
     python-dev \
     libffi-dev \
+    libssl-dev \
     libxslt1.1 \
     openssl \
     git \
