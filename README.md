@@ -2,31 +2,38 @@
 
 * Docker images for running Ansible playbooks.
 * Dependencies are automatically sourced on-the-fly from requirements.yml for Ansible Galaxy, requirements.txt for PyPI, and system_packages.txt for yum or apk.
-* Supports Ansible 2.5, 2.4, and 2.3 on Alpine, Ubuntu Xenial/Bionic, and CentOS 7.
+* Supports Ansible 2.6, 2.5, 2.4, and 2.3 on Alpine, Ubuntu Xenial/Bionic, and CentOS 7.
 
 ### Images
 
-* `latest` is currently `alpine` + Ansible 2.5
+* `latest` is currently `alpine` + Ansible 2.6
 * `centos7`, Ubuntu `xenial`/`bionic`, and `alpine` base images
 * `onbuild` variants of each base image
-* Ansible `2.5`, `2.4` and `2.3` versions of each image.
-* `git-crypt` variant based on `centos7` (see [AGWA/git-crypt](https://github.com/AGWA/git-crypt))
+* Ansible `2.6`, `2.5`, `2.4` and `2.3` versions of each image.
+* All images include `git` and [`git-crypt`](https://github.com/AGWA/git-crypt)
 * `docker` variant based on `centos7` for Docker-in-Docker usage (requires `-v /var/run/docker.sock:/var/run/docker.sock`).
 * Full list of tags:
-    * `alpine` (aka `2.5`)
+    * `alpine` (aka `2.6`)
     * `centos7`
     * `xenial`
     * `bionic`
-    * `git-crypt`
     * `docker`
     * `onbuild-alpine`
     * `onbuild-centos7`
     * `onbuild-xenial`
+    * `2.5-alpine` (aka `2.5`)
+    * `2.5-centos7`
+    * `2.5-xenial`
+    * `2.5-bionic`
+    * `2.5-docker`
+    * `2.5-onbuild-alpine`
+    * `2.5-onbuild-centos7`
+    * `2.5-onbuild-xenial`
+    * `2.5-onbuild-bionic`
     * `2.4-alpine` (aka `2.4`)
     * `2.4-centos7`
     * `2.4-xenial`
     * `2.4-bionic`
-    * `2.4-git-crypt`
     * `2.4-docker`
     * `2.4-onbuild-alpine`
     * `2.4-onbuild-centos7`
@@ -36,7 +43,6 @@
     * `2.3-centos7`
     * `2.3-xenial`
     * `2.3-bionic`
-    * `2.3-git-crypt`
     * `2.3-docker`
     * `2.3-onbuild-alpine`
     * `2.3-onbuild-centos7`
@@ -93,6 +99,7 @@ $ sudo docker run --rm -it -w /workspace -v /var/run/docker.sock:/var/run/docker
 * `GALAXY` - Path to Ansible requirements. Default: `$WORKDIR/requirements.yml`
 * `PYPI` - Path to Python requirements. Default: `$WORKDIR/requirements.txt`
 * `SYSPKGS` - Path to system package deps. Default: `$WORKDIR/system_packages.txt`
+* `GPG_PK` - *Unencrypted* ASCII GPG key for working with git-crypt.
 
 
 ### Conventions

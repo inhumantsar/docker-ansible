@@ -12,6 +12,15 @@ fi
 [ "${PYPI}" != "" ] && pypifile="${PYPI}" || pypifile="${wd}/requirements.txt"
 [ "${SYSPKGS}" != "" ] && pkgfile="${SYSPKGS}" || pkgfile="${wd}/system_packages.txt"
 
+# prep gpg key if necessary
+if [ "${GPG_PK}" != "" ]; then
+  eval $(gpg-agent --daemon 2> /dev/null)
+  echo "${GPG_PK}" > /pk.key
+  gpg --batch --yes --import /pk.key
+  git-crypt unlock
+fi
+
+
 verbosity=''
 skip_all=0
 skip_playbook=0

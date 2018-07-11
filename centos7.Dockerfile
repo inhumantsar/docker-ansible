@@ -9,6 +9,9 @@ VOLUME $WORKDIR
 WORKDIR $WORKDIR
 ENV VERSION 2.5
 ENV PKG_CMD "yum makecache fast; yum install -y"
+ENV GPG_PK ""
+ENV GIT_CRYPT_VERSION 0.6.0
+ENV GPG_TTY /dev/console
 
 ADD start.sh /
 
@@ -31,14 +34,17 @@ RUN echo "### Enabling systemd..." \
   && echo "### Installing system packages..." \
   && yum -y upgrade \
   && yum -y install \
-    gcc \
-    make \
-    python-devel \
-    libffi-devel \
-    openssl-devel \
-    git \
-    sudo \
     curl \
+    gcc \
+    gcc-c++ \
+    git \
+    gpg \
+    libffi-devel \
+    libxslt \
+    make \
+    openssl-devel \
+    python-devel \
+    sudo \
   && yum clean all \
   && rm -rf /var/cache/yum \
   && echo "### Installing pip and PyPI packages..." \
@@ -53,6 +59,12 @@ RUN echo "### Enabling systemd..." \
     boto3 \
     ansible~="$VERSION.0" \
   && rm -rf /root/.cache/pip \
+  && echo "### Installing git-crypt..." \
+  && git clone --branch $GIT_CRYPT_VERSION --single-branch \
+      https://github.com/AGWA/git-crypt.git /tmp/git-crypt \
+  && cd /tmp/git-crypt \
+  && make \
+  && make install \
   && echo "### Disabling 'requiretty' in sudoers..." \
   && sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/' /etc/sudoers \
   && echo "### Adding 'localhost' to /etc/ansible/hosts..." \
