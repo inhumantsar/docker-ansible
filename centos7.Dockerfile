@@ -13,8 +13,6 @@ ENV GPG_PK ""
 ENV GIT_CRYPT_VERSION 0.6.0
 ENV GPG_TTY /dev/console
 
-ADD start.sh /
-
 # need to perform a little boilerplate magic to enable systemd
 # taken from https://hub.docker.com/_/centos/
 ENV container docker
@@ -69,8 +67,12 @@ RUN echo "### Enabling systemd..." \
   && sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/' /etc/sudoers \
   && echo "### Adding 'localhost' to /etc/ansible/hosts..." \
   && mkdir -p /etc/ansible \
-  && echo 'localhost' > /etc/ansible/hosts \
-  && echo "### Making start.sh executable..." \
+  && echo 'localhost' > /etc/ansible/hosts
+
+ADD start.sh /
+RUN echo "### Making start.sh executable..." \
   && chmod +x /start.sh
+
+ADD VERSION /
 
 CMD ["/start.sh"]

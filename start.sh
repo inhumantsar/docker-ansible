@@ -11,15 +11,7 @@ fi
 [ "${GALAXY}" != "" ] && galaxyfile="${GALAXY}" || galaxyfile="${wd}/requirements.yml"
 [ "${PYPI}" != "" ] && pypifile="${PYPI}" || pypifile="${wd}/requirements.txt"
 [ "${SYSPKGS}" != "" ] && pkgfile="${SYSPKGS}" || pkgfile="${wd}/system_packages.txt"
-
-# prep gpg key if necessary
-if [ "${GPG_PK}" != "" ]; then
-  eval $(gpg-agent --daemon 2> /dev/null)
-  echo "${GPG_PK}" > /pk.key
-  gpg --batch --yes --import /pk.key
-  git-crypt unlock
-fi
-
+[ "${VAULTFILE}" != "" ] && vaultfile="${VAULTFILE}" || vaultfile="${wd}/vault-password.txt"
 
 verbosity=''
 skip_all=0
@@ -28,6 +20,7 @@ cmd="ansible-playbook"
 
 USAGE="""$0 [-x] [-y] [-h] [-*]\n
   Installs pre-reqs and runs an Ansible playbook.\n
+  Version $(cat /VERSION)\n
 \n
   -x    Skip all dependency installs.\n
   -y    Skip playbook run.\n
@@ -62,6 +55,22 @@ while test $# -gt 0; do
 
     shift
 done
+
+# prep gpg key if necessary
+if [ "${GPG_PK}" != "" ]; then
+  eval $(gpg-agent --daemon 2> /dev/null)
+  echo "${GPG_PK}" > /pk.key
+  gpg --batch --yes --import /pk.key
+  git-crypt unlock
+fi
+
+# autodetect vault-password.txt
+if [ -f "${vaultfile}" ]; then
+  echo -e "\n### Vault password file found at ${vaultfile}"
+  cmd="${cmd} --vault-password-file ${vaultfile}"
+else
+  echo -e "\n### No vault password file found at ${vaultfile}"
+fi
 
 # Install ansible-galaxy requirements
 if [ -f "${galaxyfile}" ] && [[ $skip_all -eq 0 ]]; then

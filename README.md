@@ -1,4 +1,4 @@
-# [docker-ansible](https://github.com/inhumantsar/ansible)
+# [docker-ansible](https://github.com/inhumantsar/ansible) Version 0.0.0
 
 * Docker images for running Ansible playbooks.
 * Dependencies are automatically sourced on-the-fly from requirements.yml for Ansible Galaxy, requirements.txt for PyPI, and system_packages.txt for yum or apk.
@@ -100,6 +100,8 @@ $ sudo docker run --rm -it -w /workspace -v /var/run/docker.sock:/var/run/docker
 * `PYPI` - Path to Python requirements. Default: `$WORKDIR/requirements.txt`
 * `SYSPKGS` - Path to system package deps. Default: `$WORKDIR/system_packages.txt`
 * `GPG_PK` - *Unencrypted* ASCII GPG key for working with git-crypt.
+* `VAULTFILE` - Path to a plaintext file containing the vault password. `--vault-password-file` is added to the `ansible-playbook` command if this file is present. Defaults to `$WORDIR/vault-password.txt`.
+
 
 
 ### Conventions
