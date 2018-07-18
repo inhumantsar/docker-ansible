@@ -11,35 +11,45 @@ fi
 [ "${GALAXY}" != "" ] && galaxyfile="${GALAXY}" || galaxyfile="${wd}/requirements.yml"
 [ "${PYPI}" != "" ] && pypifile="${PYPI}" || pypifile="${wd}/requirements.txt"
 [ "${SYSPKGS}" != "" ] && pkgfile="${SYSPKGS}" || pkgfile="${wd}/system_packages.txt"
-
-# prep gpg key if necessary
-if [ "${GPG_PK}" != "" ]; then
-  eval $(gpg-agent --daemon 2> /dev/null)
-  echo "${GPG_PK}" > /pk.key
-  gpg --batch --yes --import /pk.key
-  git-crypt unlock
-fi
-
+[ "${VAULTFILE}" != "" ] && vaultfile="${VAULTFILE}" || vaultfile="${wd}/vault-password.txt"
 
 verbosity=''
 skip_all=0
 skip_playbook=0
 cmd="ansible-playbook"
 
-USAGE="""$0 [-x] [-y] [-h] [-*]\n
-  Installs pre-reqs and runs an Ansible playbook.\n
-\n
-  -x    Skip all dependency installs.\n
-  -y    Skip playbook run.\n
-  -h    Show this help message\n
-  -*    Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)\n
-\n
-  ENV vars:\n
-    WORKDIR     Path to code location in the image. (default: /workspace)\n
-    PLAYBOOK    Path to Ansible playbook (default: WORKDIR/test.yml > local.yml > playbook.yml > site.yml)\n
-    GALAXY      Path to Ansible Galaxy requirements file (default: WORKDIR/requirements.yml)\n
-    PYPI        Path to PyPI/pip requirements file (default: WORKDIR/requirements.txt)\n
-    SYSPKGS     Path to a list of system packages to install, one per line. (default: WORKDIR/system_packages.txt)\n
+USAGE="""$0 [-x] [-y] [-h] [-*]
+
+Installs pre-reqs and runs an Ansible playbook.
+Version $(cat /VERSION)
+
+  -x    Skip all dependency installs.
+  -y    Skip playbook run.
+  -h    Show this help message
+  -*    Any option supported by ansible-playbook (eg: -e SOMEVAR=someval -i /path/to/inventory)
+
+
+The following environment variables can be used to modify the playbook run:
+
+  WORKDIR   Path to code location in the image. 
+            Default: /workspace
+
+  PLAYBOOK  Path to Ansible playbook.
+            Default: ${wd}/test.yml > local.yml > playbook.yml > site.yml
+
+  GALAXY    Path to Ansible Galaxy requirements file.
+            Default: ${wd}/requirements.yml
+
+  PYPI      Path to PyPI/pip requirements file
+            Default: ${wd}/requirements.txt
+
+  SYSPKGS   Path to a list of system packages to install, one per line.
+            Default: ${wd}/system_packages.txt
+
+  VAULTFILE Path to a plaintext file containing the Ansible Vault password.
+            Default: ${wd}/vault-password.txt
+
+  GPG_PK    Unencrypted GPG secret key to use with git-crypt.
 """
 
 # doing this instead of getopts so we can trap "invalid" params and use them as
@@ -50,7 +60,7 @@ while test $# -gt 0; do
     elif [ "$1" == "-y" ]; then
       skip_playbook=1
     elif [ "$1" == "-h" ]; then
-      echo -e $USAGE; exit 0
+      echo -e "${USAGE}"; exit 0
     else
       # this is janky as fuck, but it allows us to use inline json params for ansible
       if [[ "$1" == {* ]]; then
@@ -62,6 +72,22 @@ while test $# -gt 0; do
 
     shift
 done
+
+# prep gpg key if necessary
+if [ "${GPG_PK}" != "" ]; then
+  eval $(gpg-agent --daemon 2> /dev/null)
+  echo "${GPG_PK}" > /pk.key
+  gpg --batch --yes --import /pk.key
+  git-crypt unlock
+fi
+
+# autodetect vault-password.txt
+if [ -f "${vaultfile}" ]; then
+  echo -e "\n### Vault password file found at ${vaultfile}"
+  cmd="${cmd} --vault-password-file ${vaultfile}"
+else
+  echo -e "\n### No vault password file found at ${vaultfile}"
+fi
 
 # Install ansible-galaxy requirements
 if [ -f "${galaxyfile}" ] && [[ $skip_all -eq 0 ]]; then
