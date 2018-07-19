@@ -42,6 +42,7 @@ RUN echo "### Enabling systemd..." \
     make \
     openssl-devel \
     python-devel \
+    sshpass \
     sudo \
   && yum clean all \
   && rm -rf /var/cache/yum \

@@ -28,6 +28,7 @@ RUN echo "### Installing system packages..." \
     openssl-dev \
     python \
     python-dev \
+    sshpass \
     shadow \
     sudo \
   && echo "### Installing pip and PyPI packages..." \
