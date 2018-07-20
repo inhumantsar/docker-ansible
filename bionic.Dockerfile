@@ -17,17 +17,18 @@ RUN echo "### Installing system packages..." \
   && apt update \
   && apt upgrade -y \
   && apt install -y \
-    gcc \
-    g++ \
-    make \
-    python-dev \
-    libffi-dev \
-    libssl-dev \
-    libxslt1.1 \
-    openssl \
-    git \
-    sudo \
     curl \
+    g++ \
+    gcc \
+    git \
+    libffi-dev \
+    libxslt1.1 \
+    libssl-dev \
+    make \
+    openssl \
+    python-dev \
+    sshpass \
+    sudo \
   && apt-get clean \
   && echo "### Installing pip and PyPI packages..." \
   && curl https://bootstrap.pypa.io/get-pip.py | python \
