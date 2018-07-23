@@ -7,7 +7,7 @@ MAINTAINER Shaun Martin <shaun@samsite.ca>
 ENV WORKDIR /workspace
 VOLUME $WORKDIR
 WORKDIR $WORKDIR
-ENV VERSION 2.6
+ARG VERSION
 ENV PKG_CMD "apk --no-cache add"
 ENV GPG_PK ""
 ENV GIT_CRYPT_VERSION 0.6.0
