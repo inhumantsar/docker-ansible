@@ -1,6 +1,8 @@
 FROM inhumantsar/ansible:alpine
 MAINTAINER Shaun Martin <shaun@samsite.ca>
 
+ARG VERSION
+
 ENV WORKDIR /workspace
 ENV GALAXY $WORKDIR/requirements.yml
 ENV PYPI $WORKDIR/requirements.txt
