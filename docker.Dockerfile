@@ -10,7 +10,10 @@
 FROM inhumantsar/ansible:centos7
 MAINTAINER Shaun Martin <shaun@samsite.ca>
 
-RUN pip install docker-dynamic-inventory && \
+ARG VERSION
+
+RUN pip install --force-reinstall ansible~=$VERSION.0 && \
+    pip install docker-dynamic-inventory && \
     yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
     yum install -y docker-ce
 

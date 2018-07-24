@@ -7,7 +7,7 @@ MAINTAINER Shaun Martin <shaun@samsite.ca>
 ENV WORKDIR /workspace
 VOLUME $WORKDIR
 WORKDIR $WORKDIR
-ENV VERSION 2.5
+ARG VERSION
 ENV PKG_CMD "apt update && apt install -y"
 ENV GPG_PK ""
 ENV GIT_CRYPT_VERSION 0.6.0
@@ -17,17 +17,18 @@ RUN echo "### Installing system packages..." \
   && apt update \
   && apt upgrade -y \
   && apt install -y \
-    gcc \
+    curl \
     g++ \
-    make \
-    python-dev \
+    gcc \
+    git \
     libffi-dev \
     libxslt1.1 \
     libssl-dev \
+    make \
     openssl \
-    git \
+    python-dev \
+    sshpass \
     sudo \
-    curl \
   && apt-get clean \
   && echo "### Installing pip and PyPI packages..." \
   && curl https://bootstrap.pypa.io/get-pip.py | python \
