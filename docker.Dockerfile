@@ -12,7 +12,7 @@ MAINTAINER Shaun Martin <shaun@samsite.ca>
 
 ARG VERSION
 
-RUN pip install --force-reinstall ansible~=$VERSION && \
+RUN pip install --force-reinstall ansible~=$VERSION.0 && \
     pip install docker-dynamic-inventory && \
     yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
     yum install -y docker-ce
