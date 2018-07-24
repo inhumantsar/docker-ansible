@@ -10,6 +10,8 @@ ENV SYSPKGS $WORKDIR/system_packages.txt
 
 WORKDIR $WORKDIR
 
+RUN pip install --force-reinstall ansible~="${VERSION}.0"
+
 ONBUILD ADD . $WORKDIR/
 ONBUILD RUN /start.sh -y -g $GALAXY -r $PYPI -s $SYSPKGS
 
