@@ -1,4 +1,4 @@
-# [docker-ansible](https://github.com/inhumantsar/ansible) Version 1.0.2
+# [docker-ansible](https://github.com/inhumantsar/ansible) Version 1.0.3
 
 * Docker images for running Ansible playbooks.
 * Dependencies are automatically sourced on-the-fly from requirements.yml for Ansible Galaxy, requirements.txt for PyPI, and system_packages.txt for yum or apk.
