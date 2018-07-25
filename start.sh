@@ -73,8 +73,20 @@ while test $# -gt 0; do
     shift
 done
 
+# print startup banner
+source /etc/os-release
+seq -s# 60 | tr -d '[:digit:]'
+echo "# Launching Ansible Docker container startup script..."
+echo "#  - Image v$(cat /VERSION)"
+echo "#  - ${PRETTY_NAME}"
+echo "#  - $(ansible --version | head -n 1)"
+echo "#  - $(python --version 2>&1)"
+seq -s# 60 | tr -d '[:digit:]'
+
+
 # prep gpg key if necessary
 if [ "${GPG_PK}" != "" ]; then
+  echo -e "\n### GPG key found, importing..."
   eval $(gpg-agent --daemon 2> /dev/null)
   echo "${GPG_PK}" > /pk.key
   gpg --batch --yes --import /pk.key
@@ -83,7 +95,7 @@ fi
 
 # autodetect vault-password.txt
 if [ -f "${vaultfile}" ]; then
-  echo -e "\n### Vault password file found at ${vaultfile}"
+  echo -e "\n### Vault password file found at ${vaultfile}, using it in command."
   cmd="${cmd} --vault-password-file ${vaultfile}"
 else
   echo -e "\n### No vault password file found at ${vaultfile}"
