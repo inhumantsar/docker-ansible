@@ -50,9 +50,11 @@ env:
     - OS=onbuild-bionic   VERSION=2.3   TAG=2.3-onbuild-bionic
 
 script:
-  - docker login -u $HUB_USER -p $HUB_PASS  || travis_terminate 1
   - docker build --no-cache --build-arg VERSION="${VERSION}" -t $HUB_USER/ansible:$TAG -f $OS.Dockerfile . || travis_terminate 1
   - test "$(docker run -it --rm $HUB_USER/ansible:$TAG /bin/bash -c 'ansible --version' | head -n 1 | sed -e 's/ansible \([0-9]\.[0-9]\)\.[0-9].*/\1/')" == "${VERSION}" || travis_terminate 1
+  - BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+  - if [ "${BRANCH}" != "master" ]; then travis_terminate 0; fi
+  - docker login -u $HUB_USER -p $HUB_PASS  || travis_terminate 1
   - docker push $HUB_USER/ansible:$TAG
   - if [ $TAG == "alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible; docker push $HUB_USER/ansible; fi
   - if [ $TAG == "alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.6; docker push $HUB_USER/ansible:2.6; fi
