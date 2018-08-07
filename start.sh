@@ -130,7 +130,7 @@ else
 fi
 
 # Look for a playbook file
-if [ ! -f "${wd}/${playbook}" ]; then
+if [ ! -f "${playbook}" ] && [ ! -f "${wd}/${playbook}" ]; then
   for pb in 'test.yml' 'local.yml' 'playbook.yml' 'site.yml'; do
     if [ -f "${wd}/${pb}" ]; then
       playbook="${wd}/${pb}"
