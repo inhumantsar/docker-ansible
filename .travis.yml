@@ -16,10 +16,11 @@ env:
     - secure: qV1G/KSuTU9sTsaFYIvuJg+cauCaUiwerP9sj5PfQHIGRPNsfUXEY7ROVon1WuFRlfIqqqV+yazFwYfc4WDUCpb8g8JielyIx9nbhAIr1WeUUSBHsFR3GbcI1X0/I78Jj4H+M6NP3eTp9dJxonqNVfs7Zoc5fpnCX247ujF4n7wx3f5B2UNB+xUpjOQw9jVk2t20VZMmg03riS67cpvt9hpD6gJdyIt26xFIpCfpUenNXnRsqYsPvIdUfFJFIHf/t04gvTqrf/0f8sLvGt5+tAkqt2+j82Bvze8kYSYz3Nh6fXGjP0t24NL0Uc/I+/z80l8htcgPt4YiZTPJTJ2BcLtq2znjseavczUpuRYu/IKhVvneJpgwQtv83h3QqD6fWuUutCkUSnUZKniqj4Cu0AgQi+Vi494Q+gdhmL40QJeYCnjvTII247G+7k8Q+zJgL/PMl1xtUr+nnGbVYXnJg3zuLJDksoLU4JLfekLNABlEZSFfTMAUCfKs6SKCBMHsRaC5oBWW4laHkBCkKnCDCYSrKTWoWkh2/J+yW3xj3iXdX/pFG4pbJ/66mjhMQdwhlelcMos/YdPQzdkLvXgsDg5hswQgjENGNr68TvUUomQ8yYnTUJ/6lk5RHi34sIw23Zie8iqUr8g18XTXJkiL50ryK9bZCzAOJCTzL6aQOZ0=
 
 script:
-  - travis_build.sh alpine
-  - travis_build.sh centos7
-  - travis_build.sh xenial
-  - travis_build.sh bionic
+  - chmod +x travis_build.sh
+  - ./travis_build.sh alpine
+  - ./travis_build.sh centos7
+  - ./travis_build.sh xenial
+  - ./travis_build.sh bionic
 
 jobs:
   include:
