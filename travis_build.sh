@@ -58,10 +58,8 @@ for os in "$@"; do
     # in case a child tries to build latest from an outdated parent
     image_version="$(docker run -it --rm $HUB_USER/ansible:$tag cat /VERSION)"
     echo ""
-    git tag --list
-    git -C $TRAVIS_BUILD_DIR tag --list --sort=-v:refname
-    git -C $TRAVIS_BUILD_DIR tag --list --sort=-v:refname | head -n 1 | cut -dv -f2
-    git -C $TRAVIS_BUILD_DIR fetch --unshallow
+    git -C $TRAVIS_BUILD_DIR status
+    git -C $TRAVIS_BUILD_DIR log
     git -C $TRAVIS_BUILD_DIR tag --list --sort=-v:refname
     git -C $TRAVIS_BUILD_DIR tag --list --sort=-v:refname | head -n 1 | cut -dv -f2
     echo ""
