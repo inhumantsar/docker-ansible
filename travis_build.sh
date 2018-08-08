@@ -1,7 +1,7 @@
 #!/bin/bash
 
 current_ansible_version=2.6
-[ "${VERSION}" != "" ] && ansible_versions=("${VERSION}") || ansible_versions=(2.6 2.5 2.4 2.3)
+[ "${VERSION}" != "" ] && ansible_versions="${VERSION}" || ansible_versions=(2.6 2.5 2.4 2.3)
 
 
 if [[ "${1}" == "" ]] || [[ "${1}" == "-h" ]] || [[ "${1}" == "--help" ]]; then
@@ -38,6 +38,7 @@ for os in "$@"; do
       - Image Version: $(cat VERSION)
       
     """
+    continue
 
     docker build --no-cache --build-arg VERSION="${ansible_version}" -t $HUB_USER/ansible:$tag -f $os.Dockerfile . || travis_terminate 1 &> /dev/null || exit 1
 
