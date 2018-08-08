@@ -7,62 +7,63 @@ branches:
   only:
   - master
   - dev
-env:
+  env:
   global:
     - secure: hp1x81wvvxtsV7VFA4l5KzF0SMhd1IZcCmi1g7Cp++OYuLtGItlnVYO0lrtaT24EwLXIanQCXepTIWKvT97c7MjyX+41JfPh4Ute+NAfQVfFN+Zd3ODEFEImq04XK7SZT038IBjO/v+mH2CpnOcjmF6dwb469ZH2T/HKfYofJge50sqo37nn5oLGSAFq/Cd9/RAtbP221bZui+bO9bdVMIo93NyuesH3xH5Cou0tQB3c3SbXD1sbMHbe34D/ObBGHH0SXLCeCUjgpDcXRTVNci31a1tMr1e85MNO0iG2tXHp0/Kc/UzEYPhbhMHnS1b9al60y09sJ9qEeiwE5TtumDK/uACa4ZAMtIQAi93ddXT4vr2TVo0BOgjDhyoUDdC8Xpmc10QCWI5ETBWrKHtb899vsvxPWhFydT0tPLwkedYVHz0b+C7KtBnohsFFyCiinmR+DA/H4bnJpmfoFPy6Haezjf55hjRvCdGKqa4rrczK+d4iN1UAXc+ikhNdW9+vknm086iXqpxtY1bwzY4z50SWWCe75qWGSl9hRms9bsh/tx+nir3fMUuKZdqaIPdER+f80M/lfVKcdkfGPJMASilmcS+5L6z2Ye7KDMkWHjxs/zwcjGIJIX6Zb5c7iDXq3l8wdGG5taulpP0/OB15YkQDSv2KBYpBxA3i4qlIbco=
     - secure: qV1G/KSuTU9sTsaFYIvuJg+cauCaUiwerP9sj5PfQHIGRPNsfUXEY7ROVon1WuFRlfIqqqV+yazFwYfc4WDUCpb8g8JielyIx9nbhAIr1WeUUSBHsFR3GbcI1X0/I78Jj4H+M6NP3eTp9dJxonqNVfs7Zoc5fpnCX247ujF4n7wx3f5B2UNB+xUpjOQw9jVk2t20VZMmg03riS67cpvt9hpD6gJdyIt26xFIpCfpUenNXnRsqYsPvIdUfFJFIHf/t04gvTqrf/0f8sLvGt5+tAkqt2+j82Bvze8kYSYz3Nh6fXGjP0t24NL0Uc/I+/z80l8htcgPt4YiZTPJTJ2BcLtq2znjseavczUpuRYu/IKhVvneJpgwQtv83h3QqD6fWuUutCkUSnUZKniqj4Cu0AgQi+Vi494Q+gdhmL40QJeYCnjvTII247G+7k8Q+zJgL/PMl1xtUr+nnGbVYXnJg3zuLJDksoLU4JLfekLNABlEZSFfTMAUCfKs6SKCBMHsRaC5oBWW4laHkBCkKnCDCYSrKTWoWkh2/J+yW3xj3iXdX/pFG4pbJ/66mjhMQdwhlelcMos/YdPQzdkLvXgsDg5hswQgjENGNr68TvUUomQ8yYnTUJ/6lk5RHi34sIw23Zie8iqUr8g18XTXJkiL50ryK9bZCzAOJCTzL6aQOZ0=
-  matrix:
-    - OS=alpine           VERSION=2.6   TAG=alpine
-    - OS=centos7          VERSION=2.6   TAG=centos7
-    - OS=xenial           VERSION=2.6   TAG=xenial
-    - OS=bionic           VERSION=2.6   TAG=bionic
-    - OS=docker           VERSION=2.6   TAG=docker
-    - OS=onbuild-alpine   VERSION=2.6   TAG=onbuild-alpine
-    - OS=onbuild-centos7  VERSION=2.6   TAG=onbuild-centos7
-    - OS=onbuild-xenial   VERSION=2.6   TAG=onbuild-xenial
-    - OS=onbuild-bionic   VERSION=2.6   TAG=onbuild-bionic
-    - OS=alpine           VERSION=2.5   TAG=2.5-alpine
-    - OS=centos7          VERSION=2.5   TAG=2.5-centos7
-    - OS=xenial           VERSION=2.5   TAG=2.5-xenial
-    - OS=bionic           VERSION=2.5   TAG=2.5-bionic
-    - OS=docker           VERSION=2.5   TAG=2.5-docker
-    - OS=onbuild-alpine   VERSION=2.5   TAG=2.5-onbuild-alpine
-    - OS=onbuild-centos7  VERSION=2.5   TAG=2.5-onbuild-centos7
-    - OS=onbuild-xenial   VERSION=2.5   TAG=2.5-onbuild-xenial
-    - OS=onbuild-bionic   VERSION=2.5   TAG=2.5-onbuild-bionic
-    - OS=alpine           VERSION=2.4   TAG=2.4-alpine
-    - OS=centos7          VERSION=2.4   TAG=2.4-centos7
-    - OS=xenial           VERSION=2.4   TAG=2.4-xenial
-    - OS=bionic           VERSION=2.4   TAG=2.4-bionic
-    - OS=docker           VERSION=2.4   TAG=2.4-docker
-    - OS=onbuild-alpine   VERSION=2.4   TAG=2.4-onbuild-alpine
-    - OS=onbuild-centos7  VERSION=2.4   TAG=2.4-onbuild-centos7
-    - OS=onbuild-xenial   VERSION=2.4   TAG=2.4-onbuild-xenial
-    - OS=onbuild-bionic   VERSION=2.4   TAG=2.4-onbuild-bionic
-    - OS=alpine           VERSION=2.3   TAG=2.3-alpine
-    - OS=centos7          VERSION=2.3   TAG=2.3-centos7
-    - OS=xenial           VERSION=2.3   TAG=2.3-xenial
-    - OS=bionic           VERSION=2.3   TAG=2.3-bionic
-    - OS=docker           VERSION=2.3   TAG=2.3-docker
-    - OS=onbuild-alpine   VERSION=2.3   TAG=2.3-onbuild-alpine
-    - OS=onbuild-centos7  VERSION=2.3   TAG=2.3-onbuild-centos7
-    - OS=onbuild-xenial   VERSION=2.3   TAG=2.3-onbuild-xenial
-    - OS=onbuild-bionic   VERSION=2.3   TAG=2.3-onbuild-bionic
 
-script:
-  - docker build --no-cache --build-arg VERSION="${VERSION}" -t $HUB_USER/ansible:$TAG -f $OS.Dockerfile . || travis_terminate 1
-  - test "$(docker run -it --rm $HUB_USER/ansible:$TAG /bin/bash -c 'ansible --version' | head -n 1 | sed -e 's/ansible \([0-9]\.[0-9]\)\.[0-9].*/\1/')" == "${VERSION}" || travis_terminate 1
-  - BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-  - if [ "${BRANCH}" != "master" ]; then travis_terminate 0; fi
-  - docker login -u $HUB_USER -p $HUB_PASS  || travis_terminate 1
-  - docker push $HUB_USER/ansible:$TAG
-  - if [ $TAG == "alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible; docker push $HUB_USER/ansible; fi
-  - if [ $TAG == "alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.6; docker push $HUB_USER/ansible:2.6; fi
-  - if [ $TAG == "2.5-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.5; docker push $HUB_USER/ansible:2.5; fi
-  - if [ $TAG == "2.4-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.4; docker push $HUB_USER/ansible:2.4; fi
-  - if [ $TAG == "2.3-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.3; docker push $HUB_USER/ansible:2.3; fi
-  - if [ $TAG == "onbuild-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:onbuild; docker push $HUB_USER/ansible:onbuild; fi
-  - if [ $TAG == "onbuild-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.6-onbuild; docker push $HUB_USER/ansible:2.6-onbuild; fi
-  - if [ $TAG == "2.5-onbuild-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.5-onbuild; docker push $HUB_USER/ansible:2.5-onbuild; fi
-  - if [ $TAG == "2.4-onbuild-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.4-onbuild; docker push $HUB_USER/ansible:2.4-onbuild; fi
-  - if [ $TAG == "2.3-onbuild-alpine" ]; then docker tag $HUB_USER/ansible:$TAG $HUB_USER/ansible:2.3-onbuild; docker push $HUB_USER/ansible:2.3-onbuild; fi
+jobs:
+  include:
+    - stage: parents
+      name: "Parent Images"
+      env:
+        matrix:
+          - OS=alpine           VERSION=2.6   TAG=alpine
+          - OS=centos7          VERSION=2.6   TAG=centos7
+          - OS=xenial           VERSION=2.6   TAG=xenial
+          - OS=bionic           VERSION=2.6   TAG=bionic
+          - OS=alpine           VERSION=2.5   TAG=2.5-alpine
+          - OS=centos7          VERSION=2.5   TAG=2.5-centos7
+          - OS=xenial           VERSION=2.5   TAG=2.5-xenial
+          - OS=bionic           VERSION=2.5   TAG=2.5-bionic
+          - OS=alpine           VERSION=2.4   TAG=2.4-alpine
+          - OS=centos7          VERSION=2.4   TAG=2.4-centos7
+          - OS=xenial           VERSION=2.4   TAG=2.4-xenial
+          - OS=bionic           VERSION=2.4   TAG=2.4-bionic
+          - OS=docker           VERSION=2.4   TAG=2.4-docker
+          - OS=alpine           VERSION=2.3   TAG=2.3-alpine
+          - OS=centos7          VERSION=2.3   TAG=2.3-centos7
+          - OS=xenial           VERSION=2.3   TAG=2.3-xenial
+          - OS=bionic           VERSION=2.3   TAG=2.3-bionic
+      script:
+        - ./travis_build.sh
+        - ./travis_test.sh
+        - ./travis_deploy.sh
+    - stage: children
+      name: "Child Images"
+      env:
+        matrix:
+          - OS=docker           VERSION=2.6   TAG=docker
+          - OS=onbuild-alpine   VERSION=2.6   TAG=onbuild-alpine
+          - OS=onbuild-centos7  VERSION=2.6   TAG=onbuild-centos7
+          - OS=onbuild-xenial   VERSION=2.6   TAG=onbuild-xenial
+          - OS=onbuild-bionic   VERSION=2.6   TAG=onbuild-bionic
+          - OS=docker           VERSION=2.5   TAG=2.5-docker
+          - OS=onbuild-alpine   VERSION=2.5   TAG=2.5-onbuild-alpine
+          - OS=onbuild-centos7  VERSION=2.5   TAG=2.5-onbuild-centos7
+          - OS=onbuild-xenial   VERSION=2.5   TAG=2.5-onbuild-xenial
+          - OS=onbuild-bionic   VERSION=2.5   TAG=2.5-onbuild-bionic
+          - OS=docker           VERSION=2.4   TAG=2.4-docker
+          - OS=onbuild-alpine   VERSION=2.4   TAG=2.4-onbuild-alpine
+          - OS=onbuild-centos7  VERSION=2.4   TAG=2.4-onbuild-centos7
+          - OS=onbuild-xenial   VERSION=2.4   TAG=2.4-onbuild-xenial
+          - OS=onbuild-bionic   VERSION=2.4   TAG=2.4-onbuild-bionic
+          - OS=docker           VERSION=2.3   TAG=2.3-docker
+          - OS=onbuild-alpine   VERSION=2.3   TAG=2.3-onbuild-alpine
+          - OS=onbuild-centos7  VERSION=2.3   TAG=2.3-onbuild-centos7
+          - OS=onbuild-xenial   VERSION=2.3   TAG=2.3-onbuild-xenial
+          - OS=onbuild-bionic   VERSION=2.3   TAG=2.3-onbuild-bionic 
+      script:
+        - ./travis_build.sh
+        - ./travis_test.sh
+        - ./travis_deploy.sh
