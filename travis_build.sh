@@ -66,7 +66,7 @@ for os in "$@"; do
     # check that the script/image version is correct
     # in case a child tries to build latest from an outdated parent
     image_version="$(docker run -it --rm $HUB_USER/ansible:$tag cat /VERSION)"
-    latest_git_tag="$(git -c $TRAVIS_BUILD_DIR tag --list --sort=-v:refname | head -n 1 | cut -dv -f2)"
+    latest_git_tag="$(git -C $TRAVIS_BUILD_DIR tag --list --sort=-v:refname | head -n 1 | cut -dv -f2)"
     echo "  - Image version is ${image_version}, expecting ${latest_git_tag}"
     test "${image_version}" == "${latest_git_tag}" || travis_terminate 1 &> /dev/null || exit 1
 
