@@ -3,6 +3,7 @@
 current_ansible_version=2.6
 [ "${VERSION}" != "" ] && ansible_versions=("${VERSION}") || ansible_versions=(2.6 2.5 2.4 2.3)
 
+
 if [[ "${1}" == "" ]] || [[ "${1}" == "-h" ]] || [[ "${1}" == "--help" ]]; then
   echo """$0 [-h|--help] OSNAME
   
