@@ -38,7 +38,6 @@ for os in "$@"; do
       - Image Version: $(cat VERSION)
       
     """
-    continue
 
     docker build --no-cache --build-arg VERSION="${ansible_version}" -t $HUB_USER/ansible:$tag -f $os.Dockerfile . || travis_terminate 1 &> /dev/null || exit 1
 
