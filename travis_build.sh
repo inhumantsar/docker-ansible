@@ -61,6 +61,10 @@ for os in "$@"; do
     echo "  - [SKIPPED] Image version is ${image_version}, expecting ${latest_git_tag}"
     # test "${image_version}" == "${latest_git_tag}" || travis_terminate 1 &> /dev/null || exit 1
 
+    # check that gpg is installed and is ~v2
+    gpg_version="$(docker run -it --rm $HUB_USER/ansible:$tag /bin/bash -c  'gpg --version | head -n 1 | cut -d\  -f3')"
+    test "${gpg_version:0:1}" == "2" || travis_terminate 1 &> /dev/null || exit 1 &> /dev/null || exit
+
 
     # determine what actual branch we're working on. see https://graysonkoonce.com/getting-the-current-branch-name-during-a-pull-request-in-travis-ci/
     BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)

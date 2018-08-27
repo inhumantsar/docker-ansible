@@ -20,6 +20,7 @@ RUN echo "### Installing system packages..." \
     g++ \
     gcc \
     git \
+    gnupg \
     libffi \
     libffi-dev \
     libxslt \
