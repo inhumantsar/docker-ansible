@@ -62,6 +62,7 @@ for os in "$@"; do
     # test "${image_version}" == "${latest_git_tag}" || travis_terminate 1 &> /dev/null || exit 1
 
 
+
     # determine what actual branch we're working on. see https://graysonkoonce.com/getting-the-current-branch-name-during-a-pull-request-in-travis-ci/
     BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
 

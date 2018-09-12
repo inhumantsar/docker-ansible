@@ -8,10 +8,18 @@ fi
 
 [ "${PLAYBOOK}" != "" ] && playbook="${PLAYBOOK}" || playbook=''
 [ "${WORKDIR}" != "" ] && wd="${WORKDIR}" || wd='/workspace'
-[ "${GALAXY}" != "" ] && galaxyfile="${GALAXY}" || galaxyfile="${wd}/requirements.yml"
 [ "${PYPI}" != "" ] && pypifile="${PYPI}" || pypifile="${wd}/requirements.txt"
 [ "${SYSPKGS}" != "" ] && pkgfile="${SYSPKGS}" || pkgfile="${wd}/system_packages.txt"
 [ "${VAULTFILE}" != "" ] && vaultfile="${VAULTFILE}" || vaultfile="${wd}/vault-password.txt"
+if [ "${GALAXY}" != "" ]; then
+  galaxyfile="${GALAXY}"
+elif [ -f "${wd}/requirements.yml" ]; then
+  galaxyfile="${wd}/requirements.yml"
+elif [ -f "${wd}/roles/requirements.yml" ]; then
+  galaxyfile="${wd}/roles/requirements.yml"
+else
+  galaxyfile=""
+fi
 
 verbosity=''
 skip_all=0
