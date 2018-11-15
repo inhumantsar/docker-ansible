@@ -2,18 +2,18 @@
 
 * Docker images for running Ansible playbooks.
 * Dependencies are automatically sourced on-the-fly from requirements.yml for Ansible Galaxy, requirements.txt for PyPI, and system_packages.txt for yum or apk.
-* Supports Ansible 2.6, 2.5, 2.4, and 2.3 on Alpine, Ubuntu Xenial/Bionic, and CentOS 7.
+* Supports Ansible 2.3+ on Alpine, Ubuntu Xenial/Bionic, and CentOS 7.
 
 ### Images
 
-* `latest` is currently `alpine` + Ansible 2.6
+* `latest` is currently `alpine` + Ansible 2.7
 * `centos7`, Ubuntu `xenial`/`bionic`, and `alpine` base images
 * `onbuild` variants of each base image
-* Ansible `2.6`, `2.5`, `2.4` and `2.3` versions of each image.
+* Ansible `2.7`, `2.6`, `2.5`, `2.4` and `2.3` tags for each image.
 * All images include `git` and [`git-crypt`](https://github.com/AGWA/git-crypt)
 * `docker` variant based on `centos7` for Docker-in-Docker usage (requires `-v /var/run/docker.sock:/var/run/docker.sock`).
 * Full list of tags:
-    * `alpine` (aka `2.6`)
+    * `alpine` (aka `2.7`)
     * `centos7`
     * `xenial`
     * `bionic`
@@ -21,6 +21,15 @@
     * `onbuild-alpine`
     * `onbuild-centos7`
     * `onbuild-xenial`
+    * `2.6-alpine` (aka `2.6`)
+    * `2.6-centos7`
+    * `2.6-xenial`
+    * `2.6-bionic`
+    * `2.6-docker`
+    * `2.6-onbuild-alpine`
+    * `2.6-onbuild-centos7`
+    * `2.6-onbuild-xenial`
+    * `2.6-onbuild-bionic`
     * `2.5-alpine` (aka `2.5`)
     * `2.5-centos7`
     * `2.5-xenial`
