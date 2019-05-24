@@ -1,6 +1,6 @@
 #!/bin/bash
 
-current_ansible_version=2.7
+current_ansible_version=2.8
 [ "${VERSION}" != "" ] && ansible_versions="${VERSION}" || ansible_versions=(2.6 2.5 2.4 2.3)
 
 
