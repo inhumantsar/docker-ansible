@@ -6,14 +6,14 @@
 
 ### Images
 
-* `latest` is currently `alpine` + Ansible 2.7
+* `latest` is currently `alpine` + Ansible 2.8
 * `centos7`, Ubuntu `xenial`/`bionic`, and `alpine` base images
 * `onbuild` variants of each base image
-* Ansible `2.7`, `2.6`, `2.5`, `2.4` and `2.3` tags for each image.
+* Ansible `2.8`, `2.7`, `2.6`, `2.5`, `2.4` and `2.3` tags for each image.
 * All images include `git` and [`git-crypt`](https://github.com/AGWA/git-crypt)
 * `docker` variant based on `centos7` for Docker-in-Docker usage (requires `-v /var/run/docker.sock:/var/run/docker.sock`).
 * Full list of tags:
-    * `alpine` (aka `2.7`)
+    * `alpine` (aka `2.8`)
     * `centos7`
     * `xenial`
     * `bionic`
@@ -21,6 +21,15 @@
     * `onbuild-alpine`
     * `onbuild-centos7`
     * `onbuild-xenial`
+    * `2.7-alpine` (aka `2.7`)
+    * `2.7-centos7`
+    * `2.7-xenial`
+    * `2.7-bionic`
+    * `2.7-docker`
+    * `2.7-onbuild-alpine`
+    * `2.7-onbuild-centos7`
+    * `2.7-onbuild-xenial`
+    * `2.7-onbuild-bionic`
     * `2.6-alpine` (aka `2.6`)
     * `2.6-centos7`
     * `2.6-xenial`
