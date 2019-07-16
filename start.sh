@@ -104,6 +104,9 @@ fi
 # autodetect vault-password.txt
 if [ -f "${vaultfile}" ]; then
   echo -e "\n### Vault password file found at ${vaultfile}, using it in command."
+  if [ "${VAULT_FILE_MODE}" != "" ]; then
+    chmod "${VAULT_FILE_MODE}" "${vaultfile}"
+  fi
   cmd="${cmd} --vault-password-file ${vaultfile}"
 else
   echo -e "\n### No vault password file found at ${vaultfile}"
